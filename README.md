@@ -5,3 +5,6 @@ Build log:
 8 - 930am: Research
 930am - 4pm: create component diagram and further research.
 
+### Component diagram
+
+![Component Diagram](Component-Diagram.png)
