@@ -7,4 +7,4 @@ Build log:
 
 ### Component diagram
 
-![Component Diagram](Component-Diagram.jpg)
+![Component Diagram](Component-Diagram.png)
