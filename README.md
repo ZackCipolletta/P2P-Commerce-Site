@@ -7,4 +7,4 @@ Build log:
 
 ### Component diagram
 
-![Component Diagram](Component-Diagram.png)
+![Component Diagram](Capstone-Part1.drawio.png)
