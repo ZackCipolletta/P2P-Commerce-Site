@@ -1,15 +1,23 @@
-import Header from './Header';
-import Control from './Control';
-import ProductList from './ProductList';
-import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react';
+import { ChakraProvider, Box, Text, Link, VStack, Code, Grid, theme, SimpleGrid } from '@chakra-ui/react';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import Header from "./Header";
+import ProductList from "./ProductList";
+
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Control></Control>
-      <ProductList />
-    </div>
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+        <Grid minH="100vh" minW="100vh"columns={{sm: 1, md: 2, lg: 3}} spacing={10}>
+          <ColorModeSwitcher justifySelf="flex-end" />
+          <VStack spacing={8}>
+            <Header />
+            <ProductList />
+          </VStack>
+        </Grid>
+      </Box>
+    </ChakraProvider>
   );
 }
 

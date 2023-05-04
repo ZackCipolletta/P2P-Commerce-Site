@@ -12,6 +12,7 @@ import RayBan from "./../img/RayBan.png";
 import WatchPic from "./../img/WatchPic.png";
 import Speaker from "./../img/Speaker.png";
 import Shoe from "./../img/Shoe.png";
+import { Card, CardHeader, CardBody, CardFooter, SimpleGrid, Box } from '@chakra-ui/react';
 
 const mainProductList = [
   {
@@ -108,6 +109,7 @@ function ProductList() {
   return (
     <React.Fragment>
       <hr />
+      <SimpleGrid columns={3} spacing={10}>
       {mainProductList.map((product, index) =>
         <Product image={product.image}
           title={product.title}
@@ -117,7 +119,8 @@ function ProductList() {
           seller={product.seller}
           key={index}
         />
-      )}
+        )}
+      </SimpleGrid>
     </React.Fragment>
   );
 }
