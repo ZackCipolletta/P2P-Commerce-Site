@@ -15,14 +15,14 @@ function Product(props) {
         <CardBody>
           {props.image}
           <Stack mt='6' spacing='3'>
-            <Heading size='md'>Living room Sofa</Heading>
+            <Heading size='md'>{props.title}</Heading>
             <Text>
               {props.description}
             </Text>
             <Text color='blue.600' fontSize='2xl'>
               {props.price}
             </Text>
-            <Text>Sold by: { props.seller}</Text>
+            <Text>Sold by: {props.seller}</Text>
           </Stack>
         </CardBody>
         <Divider />

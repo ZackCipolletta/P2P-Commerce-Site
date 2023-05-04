@@ -12,7 +12,7 @@ import RayBan from "./../img/RayBan.png";
 import WatchPic from "./../img/WatchPic.png";
 import Speaker from "./../img/Speaker.png";
 import Shoe from "./../img/Shoe.png";
-import { Card, CardHeader, CardBody, CardFooter, SimpleGrid, Box } from '@chakra-ui/react';
+import { ChakraProvider, Box, Text, Link, VStack, Code, Grid, theme, SimpleGrid } from '@chakra-ui/react';
 
 const mainProductList = [
   {
