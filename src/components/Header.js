@@ -39,7 +39,8 @@ export default function WithSubnavigation() {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
-            Logo
+            <Link href={'/'}>Logo</Link>
+            
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -71,7 +72,8 @@ export default function WithSubnavigation() {
             _hover={{
               bg: 'pink.300',
             }}>
-            Sign Up
+            <Link href={'/sign-up'}>Sign Up</Link>
+            
           </Button>
         </Stack>
       </Flex>
