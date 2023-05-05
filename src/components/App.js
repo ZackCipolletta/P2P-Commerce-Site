@@ -4,6 +4,7 @@ import SignIn from "./SignIn";
 import SignUp from './SignUp';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./Header";
 import Control from './Control';
 
