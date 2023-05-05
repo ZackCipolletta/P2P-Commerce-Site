@@ -47,7 +47,7 @@ Product.propTypes = {
   condition: PropTypes.string,
   price: PropTypes.number,
   seller: PropTypes.string,
-  image: PropTypes.string
+  image: PropTypes.object
 };
 
 export default Product;
