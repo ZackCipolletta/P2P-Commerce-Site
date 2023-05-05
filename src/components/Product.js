@@ -1,17 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import 'bootstrap/dist/css/bootstrap.css';
-import {
-  Card, CardHeader, CardBody, CardFooter, Image, Stack,
-  Heading, Text, Divider, ButtonGroup, Button
-} from '@chakra-ui/react';
+import { Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text,
+  Divider, ButtonGroup, Button } from '@chakra-ui/react';
 
 
 function Product(props) {
 
   return (
     <React.Fragment>
-      <Card maxW='sm'>
+      <Card maxW='sm' onClick={() => props.whenProductClicked(props.id)}>
         <CardBody>
           {props.image}
           <Stack mt='6' spacing='3'>

@@ -16,3 +16,5 @@ function ProductDetail(props) {
     </React.Fragment>
   )
 }
+
+export default ProductDetail;

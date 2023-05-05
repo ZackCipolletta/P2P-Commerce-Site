@@ -105,24 +105,31 @@ const mainProductList = [
   }
 ];
 
-function ProductList() {
+function ProductList(props) {
   return (
     <React.Fragment>
       <hr />
       <SimpleGrid columns={3} spacing={10}>
       {mainProductList.map((product, index) =>
-        <Product image={product.image}
+        <Product
+          whenProductClicked={props.onProductSelection}
+          image={product.image}
           title={product.title}
           description={product.description}
           condition={product.condition}
           price={product.price}
           seller={product.seller}
+          id={index}
           key={index}
         />
         )}
       </SimpleGrid>
     </React.Fragment>
   );
+}
+
+ProductList.propTypes = {
+  onProductSelection: PropTypes.func
 }
 
 export default ProductList;
