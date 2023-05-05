@@ -4,6 +4,9 @@ import ProductList from "./ProductList";
 import NewProduct from "./NewProduct";
 import { FaLessThanEqual } from "react-icons/fa";
 import ProductDetail from "./ProductDetail";
+import db from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
+
 
 function Control(props) {
 
@@ -12,6 +15,11 @@ function Control(props) {
   const [mainProductList, setMainProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
+
+  const handleAddingNewProductToList = async (newProductData) => {
+    await addDoc(collection(db, "products"), newProductData);
+    setFormVisibleOnPage(false);
+  }
 
 
   // useEffect(() => {
@@ -47,6 +55,8 @@ function Control(props) {
 
   const handleChangingSelectedProduct = (id) => {
     const selection = mainProductList.filter(product => product.id === id[0]);
+    console.log("product id: " + id)
+    console.log(selection)
     setSelectedProduct(selection);
   };
 

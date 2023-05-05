@@ -1,31 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Box } from '@chakra-ui/react';
+import ProductForm from "./ProductForm";
+import Product from "./Product";
 
 function NewProductForm(props) {
 
+  function handleNewProductFormSubmission(event) {
+    event.preventDefault();
+    props.onNewProductCreation({
+      title: event.target.title.value,
+      description: event.target.description.value,
+      condition: event.target.condition.value,
+      price: event.target.price.value,
+      shippingPrice: event.target.shippingPrice.value,
+    });
+  }
+
   return (
     <React.Fragment>
-      <Box className="border p-4" textAlign="left">
-        <form onSubmit={props.formSubmissionHandler}>
-          <p>Title: <input type="text" name="title" placeholder="What are you selling?" /></p>
-          <p>Description: <input type="text" name="description" placeholder="Enter your description here" /></p>
-          <p>Condition: <span>Some sort of buttons or radio selection indicating condition `(like new)` (New) (Good) (Fair) (Poor) </span></p>
-
-          <p>Price: <input type="number" name="price" placeholder="Enter price here" /></p>
-          <p>Shipping Price: <input type="number" name="shippingPrice" placeholder="Enter shipping price here" /></p>
-
-          Total cost calculate: $$$
-          <span> <button type="button" className="btn btn-primary" >Submit</button></span>
-        </form>
-      </Box>
+      <ProductForm
+        formSubmissionHandler={handleNewProductFormSubmission}
+        buttonText="Submit" />
     </React.Fragment>
   );
 
 }
 
 NewProductForm.propTypes = {
-  formSubmissionHandler: PropTypes.func
+  onNewProductCreation: PropTypes.func
 };
 
 export default NewProductForm;
