@@ -6,12 +6,14 @@ import Product from "./Product";
 
 function NewProductForm(props) {
 
+  const { onNewProductCreation } = props; // Destructuring props to extract onNewProductCreation
+
   function handleNewProductFormSubmission(event) {
     event.preventDefault();
-    props.onNewProductCreation({
+    onNewProductCreation({ // Using onNewProductCreation extracted from props
       title: event.target.title.value,
       description: event.target.description.value,
-      condition: event.target.condition.value,
+      // condition: event.target.condition.value,
       price: event.target.price.value,
       shippingPrice: event.target.shippingPrice.value,
     });

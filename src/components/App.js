@@ -7,6 +7,7 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./Header";
 import Control from './Control';
+import NewProduct from './NewProduct';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/" element={<Control />} />
+                <Route path="/add-New" element={<NewProduct />} />
               </Routes>
             </VStack>
           </Grid>

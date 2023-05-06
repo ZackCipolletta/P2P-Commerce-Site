@@ -5,13 +5,14 @@ import NewProduct from "./NewProduct";
 import { FaLessThanEqual } from "react-icons/fa";
 import ProductDetail from "./ProductDetail";
 import db from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, orderBy } from "firebase/firestore";
+import NewProductForm from "./NewProductForm";
 
 
 function Control(props) {
 
 
-  const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
+  const [formVisibleOnPage, setFormVisibleOnPage] = useState(true);
   const [mainProductList, setMainProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
@@ -22,36 +23,36 @@ function Control(props) {
   }
 
 
-  // useEffect(() => {
-  //   const unSubscribe = onSnapshot(
-  //     collection(db, "products"),
-  //     (collectionSnapshot) => {
-  //       const products = [];
-  //       collectionSnapshot.forEach((doc) => {
-  //         products.push({
-  //           title: doc.data().title,
-  //           description: doc.data().description,
-  //           price: doc.data().price,
-  //           condition: doc.data().condition,
-  //           image: doc.data().image,
-  //           seller: doc.data().seller
-  //         });
-  //       });
-  //       setMainProductList(products);
-  //     },
-  //     (error) => {
-  //       setError(error.message);
-  //     }
-  //   );
-  //   return () => unSubscribe();
-  // }, []);
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      collection(db, "products"),
+      (collectionSnapshot) => {
+        const products = [];
+        collectionSnapshot.forEach((doc) => {
+          products.push({
+            title: doc.data().title,
+            description: doc.data().description,
+            price: doc.data().price,
+            condition: doc.data().condition,
+            image: doc.data().image,
+            seller: doc.data().seller
+          });
+        });
+        setMainProductList(products);
+      },
+      (error) => {
+        setError(error.message);
+      }
+    );
+    return () => unSubscribe();
+  }, []);
 
 
-  // const handleClick = () => {
-  //   if (selectedProduct != null) {
-  //     setSelectedProduct(null;)
-  //   }
-  // };
+  const handleClick = () => {
+    if (selectedProduct != null) {
+      setSelectedProduct(null)
+    }
+  };
 
   const handleChangingSelectedProduct = (id) => {
     const selection = mainProductList.filter(product => product.id === id[0]);
@@ -66,10 +67,12 @@ function Control(props) {
     CurrentlyVisibleState = <ProductDetail
       product={selectedProduct} />;
   } else if (formVisibleOnPage) {
-    CurrentlyVisibleState = <NewProduct />;
+    CurrentlyVisibleState =
+      <NewProductForm onNewProductCreation={handleAddingNewProductToList} />;
   } else {
     CurrentlyVisibleState = <ProductList
       onProductSelection={handleChangingSelectedProduct}
+      productList={mainProductList}
     />;
   }
 

@@ -43,7 +43,7 @@ Product.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   condition: PropTypes.string,
-  price: PropTypes.number,
+  price: PropTypes.string,
   seller: PropTypes.string,
   image: PropTypes.object
 };

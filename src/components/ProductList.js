@@ -110,7 +110,7 @@ function ProductList(props) {
     <React.Fragment>
       <hr />
       <SimpleGrid columns={3} spacing={10}>
-      {mainProductList.map((product, index) =>
+      {props.productList.map((product) =>
         <Product
           whenProductClicked={props.onProductSelection}
           image={product.image}
@@ -119,8 +119,8 @@ function ProductList(props) {
           condition={product.condition}
           price={product.price}
           seller={product.seller}
-          id={index}
-          key={index}
+          id={product.id}
+          key={product.id}
         />
         )}
       </SimpleGrid>
