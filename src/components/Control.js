@@ -12,7 +12,7 @@ import NewProductForm from "./NewProductForm";
 function Control(props) {
 
 
-  const [formVisibleOnPage, setFormVisibleOnPage] = useState(true);
+  const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [mainProductList, setMainProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
@@ -35,7 +35,8 @@ function Control(props) {
             price: doc.data().price,
             condition: doc.data().condition,
             image: doc.data().image,
-            seller: doc.data().seller
+            seller: doc.data().seller,
+            id: doc.id
           });
         });
         setMainProductList(products);
@@ -55,8 +56,9 @@ function Control(props) {
   };
 
   const handleChangingSelectedProduct = (id) => {
-    const selection = mainProductList.filter(product => product.id === id[0]);
+    const selection = mainProductList.filter(product => product.id === id)[0];
     console.log("product id: " + id)
+    console.log(selection.title)
     console.log(selection)
     setSelectedProduct(selection);
   };

@@ -11,7 +11,11 @@ function ProductDetail(props) {
 
   return (
     <React.Fragment>
-      <p>props.title</p>
+      <p>Title: {props.product.title}</p>
+      <p>Condition: {props.product.condition}</p>
+      <p>Price: ${props.product.price}</p>
+      <p>Description: {props.product.description}</p>
+      <p>Seller: {props.product.seller}</p>
     </React.Fragment>
   )
 }
