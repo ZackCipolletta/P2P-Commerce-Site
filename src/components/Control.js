@@ -20,7 +20,7 @@ function Control(props) {
   const handleAddingNewProductToList = async (newProductData) => {
     await addDoc(collection(db, "products"), newProductData);
     setFormVisibleOnPage(false);
-  }
+  };
 
 
   useEffect(() => {
@@ -51,26 +51,34 @@ function Control(props) {
 
   const handleClick = () => {
     if (selectedProduct != null) {
-      setSelectedProduct(null)
+      setFormVisibleOnPage(null);
+      setSelectedProduct(null);
+
     }
   };
 
   const handleChangingSelectedProduct = (id) => {
     const selection = mainProductList.filter(product => product.id === id)[0];
-    console.log("product id: " + id)
-    console.log(selection.title)
-    console.log(selection)
+    console.log("product id: " + id);
+    console.log(selection.title);
+    console.log(selection);
     setSelectedProduct(selection);
   };
 
 
   let CurrentlyVisibleState = null;
+  let buttonText = null;
+
   if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
       product={selectedProduct} />;
+    buttonText = "Return to list of products";
+
   } else if (formVisibleOnPage) {
-    CurrentlyVisibleState =
-      <NewProductForm onNewProductCreation={handleAddingNewProductToList} />;
+    CurrentlyVisibleState = <NewProductForm
+      onNewProductCreation={handleAddingNewProductToList}
+      buttonText="Return to list of products"
+    />;
   } else {
     CurrentlyVisibleState = <ProductList
       onProductSelection={handleChangingSelectedProduct}
@@ -81,6 +89,7 @@ function Control(props) {
   return (
     <React.Fragment>
       {CurrentlyVisibleState}
+      {<button onClick={handleClick} className="btn btn-primary">{buttonText}</button>}
     </React.Fragment>
   );
 
