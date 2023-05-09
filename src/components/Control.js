@@ -4,9 +4,10 @@ import ProductList from "./ProductList";
 import NewProduct from "./NewProduct";
 import { FaLessThanEqual } from "react-icons/fa";
 import ProductDetail from "./ProductDetail";
-import db from "../firebase";
+import { db } from "../firebase";
 import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, orderBy } from "firebase/firestore";
 import NewProductForm from "./NewProductForm";
+
 
 function Control(props) {
 
@@ -17,13 +18,16 @@ function Control(props) {
   const [error, setError] = useState(null);
 
   const handleAddingNewProductToList = async (newProductData) => {
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
     await addDoc(collection(db, "products"), newProductData);
     setFormVisibleOnPage(false);
   };
 
   const testPrint = () => {
     console.log("This test worked");
-}
+  };
 
 
   useEffect(() => {
@@ -76,12 +80,6 @@ function Control(props) {
     CurrentlyVisibleState = <ProductDetail
       product={selectedProduct} />;
     buttonText = "Return to list of products";
-
-  // } else if (formVisibleOnPage) {
-  //   CurrentlyVisibleState = <NewTest
-  //     onNewTest={testPrint}
-  //     buttonText="Return to List of products"
-  //   />
   } else if (formVisibleOnPage) {
     CurrentlyVisibleState = <NewProductForm
       onNewProductCreation={handleAddingNewProductToList}

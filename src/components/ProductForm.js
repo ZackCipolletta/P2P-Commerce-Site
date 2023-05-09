@@ -1,20 +1,30 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { Box } from '@chakra-ui/react';
+import { v4 } from "uuid";
+import { storage } from "../firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
 function ProductForm(props) {
-
-  const [file, setFile] = useState(null);
-
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+  // ---------------------------------------------------
+  const [imageUpload, setImageUpload] = useState(null);
+  const uploadIamge = () => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `productImages/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then(() => {
+      alert("Image Uploaded");
+    });
   };
+
 
   return (
     <React.Fragment>
       <Box className="border p-4" textAlign="left">
-        <form onSubmit={props.formSubmissionHandler}>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          props.formSubmissionHandler(e);
+          uploadIamge(e);
+        }}>
           <p>Title:
             <input type="text" name="title" placeholder="What are you selling?" />
           </p>
@@ -22,9 +32,11 @@ function ProductForm(props) {
             <input type="text" name="description" placeholder="Enter your description here" />
           </p>
           <p>Upload image:
-            <input type="file" id="file-input" name="image" />
-            <span id="drop-zone" onChange={handleFileChange}>
-            </span>
+            <input type="file" id="file-input" name="image"
+              onChange={(e) => {
+                setImageUpload(e.target.files[0]);
+              }}
+            />
           </p>
           <p>Condition:
             <span>Some sort of buttons or radio selection indicating condition `(like new)` (New) (Good) (Fair) (Poor) </span>
@@ -43,7 +55,7 @@ function ProductForm(props) {
           </span>
         </form>
       </Box>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 
