@@ -9,11 +9,16 @@ function NewProductForm(props) {
   const { onNewProductCreation } = props; // Destructuring props to extract onNewProductCreation
 
   function handleNewProductFormSubmission(event) {
+      
+
+
+    
     event.preventDefault();
     onNewProductCreation({ // Using onNewProductCreation extracted from props
       title: event.target.title.value,
       description: event.target.description.value,
       // condition: event.target.condition.value,
+      image: event.target.image.value,
       price: event.target.price.value,
       shippingPrice: event.target.shippingPrice.value,
     });

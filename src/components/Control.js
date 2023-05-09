@@ -8,11 +8,10 @@ import db from "../firebase";
 import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, orderBy } from "firebase/firestore";
 import NewProductForm from "./NewProductForm";
 
-
 function Control(props) {
 
 
-  const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
+  const [formVisibleOnPage, setFormVisibleOnPage] = useState(true);
   const [mainProductList, setMainProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
@@ -21,6 +20,10 @@ function Control(props) {
     await addDoc(collection(db, "products"), newProductData);
     setFormVisibleOnPage(false);
   };
+
+  const testPrint = () => {
+    console.log("This test worked");
+}
 
 
   useEffect(() => {
@@ -74,6 +77,11 @@ function Control(props) {
       product={selectedProduct} />;
     buttonText = "Return to list of products";
 
+  // } else if (formVisibleOnPage) {
+  //   CurrentlyVisibleState = <NewTest
+  //     onNewTest={testPrint}
+  //     buttonText="Return to List of products"
+  //   />
   } else if (formVisibleOnPage) {
     CurrentlyVisibleState = <NewProductForm
       onNewProductCreation={handleAddingNewProductToList}
