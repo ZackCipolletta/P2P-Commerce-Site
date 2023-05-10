@@ -1,17 +1,21 @@
 import {
-  Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link, Popover, useColorMode,
-  PopoverTrigger, PopoverContent, useColorModeValue, useBreakpointValue, useDisclosure
+  Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link,
+  useColorModeValue, useBreakpointValue, useDisclosure
 } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
+import { HamburgerIcon, CloseIcon, ChevronDownIcon, } from '@chakra-ui/icons';
 
-import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, } from '@chakra-ui/icons';
-
-export default function WithSubnavigation() {
+export default function Header({ onAddProduct }) {
   const { isOpen, onToggle } = useDisclosure();
   const colorModeValue = useColorModeValue('white', 'gray.800');
   const textColorModeValue = useColorModeValue('gray.600', 'white');
   const borderColorModeValue = useColorModeValue('gray.200', 'gray.900');
   const hoverColorModeValue = useColorModeValue('gray.800', 'white');
   const hoverTextColorModeValue = useColorModeValue('gray.600', 'gray.200');
+
+  const handleAddProductClick = () => {
+    onAddProduct();
+  };
 
   return (
     <Box>
@@ -52,9 +56,10 @@ export default function WithSubnavigation() {
             <Stack direction={'row'} spacing={4}>
               {NAV_ITEMS.map((navItem) => (
                 <Box key={navItem.label}>
-                  <Link
+                  <NavLink
                     p={2}
-                    href={navItem.href ?? '#'}
+                    // href={navItem.href ?? '#'}
+                    to={navItem.to}
                     fontSize={'sm'}
                     fontWeight={500}
                     color={textColorModeValue}
@@ -64,7 +69,7 @@ export default function WithSubnavigation() {
                     }}
                   >
                     {navItem.label}
-                  </Link>
+                  </NavLink>
                 </Box>
               ))}
             </Stack>
@@ -75,6 +80,14 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6} >
+          <Button
+            variant={'ghost'}
+            onClick={handleAddProductClick}
+            fontSize={'sm'}
+            fontWeight={400}
+          >
+            Add Product
+          </Button>
           <Button
             as={'a'}
             fontSize={'sm'}
@@ -104,6 +117,7 @@ export default function WithSubnavigation() {
     </Box>
   );
 }
+
 const MobileNav = () => {
   return (
     <Stack
@@ -156,5 +170,5 @@ const MobileNavItem = ({ label, children, href }) => {
 };
 
 const NAV_ITEMS = [{
-  label: 'Category1', href: '#',
-}, { label: 'Category2', href: '#', }, { label: 'Category3', href: '#', }, { label: 'Add Product', href: "/add-New", }];
+  label: 'Category1', to: '/',
+}, { label: 'Category2', to: '/', }, { label: 'Category3', to: '/', }, { label: 'Category 4', to: "/", }];

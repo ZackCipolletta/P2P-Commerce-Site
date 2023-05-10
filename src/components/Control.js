@@ -2,33 +2,21 @@ import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import ProductList from "./ProductList";
 import NewProduct from "./NewProduct";
-import { FaLessThanEqual } from "react-icons/fa";
 import ProductDetail from "./ProductDetail";
 import { db } from "../firebase";
 import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, orderBy } from "firebase/firestore";
 import NewProductForm from "./NewProductForm";
-
+import { Route, Routes, Outlet } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
 
 function Control(props) {
 
-
-  const [formVisibleOnPage, setFormVisibleOnPage] = useState(true);
+  // const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [mainProductList, setMainProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleAddingNewProductToList = async (newProductData) => {
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    await addDoc(collection(db, "products"), newProductData);
-    setFormVisibleOnPage(false);
-  };
-
-  const testPrint = () => {
-    console.log("This test worked");
-  };
-
+  const { formVisibleOnPage, onResetForm, setFormVisibleOnPage } = props;
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -55,13 +43,19 @@ function Control(props) {
     return () => unSubscribe();
   }, []);
 
+  // onResetForm();
+
 
   const handleClick = () => {
     if (selectedProduct != null) {
-      setFormVisibleOnPage(null);
+      // onResetForm();
+      setFormVisibleOnPage(false);
       setSelectedProduct(null);
+    } else {
 
     }
+    setFormVisibleOnPage(false);
+    console.log("handleClick reached");
   };
 
   const handleChangingSelectedProduct = (id) => {
@@ -71,6 +65,13 @@ function Control(props) {
     console.log(selection);
     setSelectedProduct(selection);
   };
+
+  const handleAddingNewProductToList = async (newProductData) => {
+    await addDoc(collection(db, "products"), newProductData);
+    setFormVisibleOnPage(false);
+  };
+
+  // onClick={() => props.whenProductClicked(props.id)}>
 
 
   let CurrentlyVisibleState = null;
@@ -82,9 +83,9 @@ function Control(props) {
     buttonText = "Return to list of products";
   } else if (formVisibleOnPage) {
     CurrentlyVisibleState = <NewProductForm
-      onNewProductCreation={handleAddingNewProductToList}
-      buttonText="Return to list of products"
-    />;
+      onNewProductCreation={handleAddingNewProductToList} />;
+    buttonText = "Return to list of products";
+
   } else {
     CurrentlyVisibleState = <ProductList
       onProductSelection={handleChangingSelectedProduct}
@@ -95,10 +96,22 @@ function Control(props) {
   return (
     <React.Fragment>
       {CurrentlyVisibleState}
-      {<button onClick={handleClick} className="btn btn-primary">{buttonText}</button>}
+      <button onClick={() => { handleClick(); }} className="btn btn-primary">{buttonText}</button>
     </React.Fragment>
   );
-
 }
 
 export default Control;
+
+
+
+// return (
+//   <React.Fragment>
+//     <Router>
+//       <Routes>
+//         <Route path="/" element={<ProductPage currentlyVisibleState={currentlyVisibleState} onClick={handleClick} />} />
+//         <Route path="/about" element={<About />} />
+//       </Routes>
+//     </Router>
+//   </React.Fragment>
+// );
