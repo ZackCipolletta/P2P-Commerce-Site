@@ -30,8 +30,8 @@ function ProductForm(props) {
           <p>Title:
             <input type="text" name="title" placeholder="What are you selling?" />
           </p>
-          <p>Description:
-            <input type="text" name="description" placeholder="Enter your description here" />
+          <p><span style={{ verticalAlign: 'top' }}>Description: </span>
+            <textarea type="textarea" name="description" placeholder="Enter your description here" style={{ width: "500px", height: "100px", resize: "both" }}/>
           </p>
           <p>Upload image:
             <input type="file" id="file-input" name="image"
