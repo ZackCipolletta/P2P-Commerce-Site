@@ -29,9 +29,12 @@ function NewProductForm(props) {
       price: price,
       shippingPrice: shippingPrice,
       imageURL: imageURL,
+      // user: props.user
     };
 
+    console.log(props.user);
     console.log(title)
+    console.log("title and user should be above")
     props.onNewProductCreation(newProduct);
   }
 
@@ -52,8 +55,9 @@ function NewProductForm(props) {
   return (
     <React.Fragment>
       <ProductForm
-        onImageUpload={handleImageUpload}
+        // onImageUpload={handleImageUpload}
         formSubmissionHandler={handleNewProductCreation}
+        userCredentialInfo={props.userCredentialInfo}
         buttonText="Submit" />
     </React.Fragment>
   );

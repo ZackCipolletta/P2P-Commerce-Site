@@ -16,7 +16,7 @@ function Control(props) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
 
-  const { formVisibleOnPage, onResetForm, setFormVisibleOnPage } = props;
+  const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo } = props;
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -30,7 +30,7 @@ function Control(props) {
             price: doc.data().price,
             condition: doc.data().condition,
             imageUrl: doc.data().imageUrl,
-            seller: doc.data().seller,
+            user: doc.data().user,
             id: doc.id
           });
         });
@@ -83,13 +83,15 @@ function Control(props) {
     buttonText = "Return to list of products";
   } else if (formVisibleOnPage) {
     CurrentlyVisibleState = <NewProductForm
-      onNewProductCreation={handleAddingNewProductToList} />;
+      onNewProductCreation={handleAddingNewProductToList}
+      userCredentialInfo={userCredentialInfo} />;
     buttonText = "Return to list of products";
 
   } else {
     CurrentlyVisibleState = <ProductList
       onProductSelection={handleChangingSelectedProduct}
       productList={mainProductList}
+      userCredentialInfo={userCredentialInfo}
     />;
   }
 

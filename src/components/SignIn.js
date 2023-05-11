@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase';
 
-export default function SignIn() {
+export default function SignIn(props) {
 
   const [signInSuccess, setSignInSuccess] = useState(null);
 
@@ -14,6 +14,7 @@ export default function SignIn() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         setSignInSuccess(`You've successfully signed in as ${userCredential.user.email}!`);
+        props.onSignInSuccess(userCredential.user);
       })
       .catch((error) => {
         setSignInSuccess(`There was an error signing in: ${error.message}!`);

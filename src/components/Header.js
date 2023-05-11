@@ -50,7 +50,7 @@ export default function Header({ onAddProduct }) {
             fontFamily={'heading'}
             color={textColorModeValue}
           >
-            <Link href={'/'}>Logo</Link>
+            <Link to={'/'}>Logo</Link>
           </Text>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <Stack direction={'row'} spacing={4}>

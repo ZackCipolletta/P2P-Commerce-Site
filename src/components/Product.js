@@ -12,8 +12,6 @@ function Product(props) {
   return (
 
     < React.Fragment >
-      {console.log("image: " + props.imageUrl)}
-      {console.log("title: " + props.title)}
       <Card maxW='sm' onClick={() => props.whenProductClicked(props.id)}>
         <CardBody>
           <img src={props.imageUrl} alt="product" />
@@ -25,7 +23,7 @@ function Product(props) {
             <Text color='blue.600' fontSize='2xl'>
               {props.price}
             </Text>
-            <Text>Sold by: {props.seller}</Text>
+            <Text>Sold by: {props.user}</Text>
           </Stack>
         </CardBody>
         <Divider />

@@ -10,15 +10,16 @@ import Control from './Control';
 function App() {
 
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
+  const [userCredentialInfo, setUserCredentialInfo] = useState(null);
+
+  function handleSignInSuccess(userCredential) {
+    setUserCredentialInfo(userCredential);
+  }
 
   function handleAddProduct() {
     setFormVisibleOnPage(true);
-    console.log(formVisibleOnPage)
+    console.log(formVisibleOnPage);
   }
-
-  // function resetFormOnPage() {
-  //   setFormVisibleOnPage(false);
-  // }
 
   return (
     <ChakraProvider theme={theme}>
@@ -29,12 +30,12 @@ function App() {
             <ColorModeSwitcher justifySelf="flex-end" />
             <VStack spacing={8}>
               <Routes>
-                <Route path="/sign-in" element={<SignIn />} />
+                <Route path="/sign-in" element={<SignIn onSignInSuccess={handleSignInSuccess} />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="*" element={<Control
                   formVisibleOnPage={formVisibleOnPage}
-                  // onResetForm={resetFormOnPage}
                   setFormVisibleOnPage={setFormVisibleOnPage}
+                  userCredentialInfo={userCredentialInfo}
                 />} />
               </Routes>
             </VStack>

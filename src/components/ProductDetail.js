@@ -12,7 +12,7 @@ function ProductDetail(props) {
         <p>Condition: {props.product.condition}</p>
         <p>Price: ${props.product.price}</p>
         <p>Description: {props.product.description}</p>
-        <p>Seller: {props.product.seller}</p>
+        <p>Seller: {props.product.user}</p>
       </Box>
     </React.Fragment>
   );

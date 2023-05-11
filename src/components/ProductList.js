@@ -4,9 +4,16 @@ import PropTypes from "prop-types";
 import { ChakraProvider, Box, Text, Link, VStack, Code, Grid, theme, SimpleGrid } from '@chakra-ui/react';
 
 function ProductList(props) {
+
+  const user = props.userCredentialInfo
+  const userEmail = user ? user.email : null;
+
   return (
     <React.Fragment>
+      {console.log("user is: ")}
+      {console.log(userEmail)}
       <hr />
+      
       <SimpleGrid columns={3} spacing={10}>
       {props.productList.map((product) =>
         <Product
@@ -16,7 +23,7 @@ function ProductList(props) {
           description={product.description}
           condition={product.condition}
           price={product.price}
-          seller={product.seller}
+          user={product.user}
           id={product.id}
           key={product.id}
         />
