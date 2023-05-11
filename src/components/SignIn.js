@@ -1,32 +1,59 @@
-import { Button, Checkbox, Flex, FormControl, FormLabel, Heading, Input, Link, Stack, Image } from '@chakra-ui/react';
+import { Button, Checkbox, Flex, FormControl, FormLabel, Heading, Input, Link, Stack, Image, Text, } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../firebase';
 
 export default function SignIn() {
+
+  const [signInSuccess, setSignInSuccess] = useState(null);
+
+  function doSignIn(event) {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setSignInSuccess(`You've successfully signed in as ${userCredential.user.email}!`);
+      })
+      .catch((error) => {
+        setSignInSuccess(`There was an error signing in: ${error.message}!`);
+      });
+  }
+
+
   return (
     <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
       <Flex p={8} flex={1} align={'center'} justify={'center'}>
-        <Stack spacing={4} w={'full'} maxW={'md'}>
-          <Heading fontSize={'2xl'}>Sign in to your account</Heading>
-          <FormControl id="email">
-            <FormLabel>Email address</FormLabel>
-            <Input type="email" />
-          </FormControl>
-          <FormControl id="password">
-            <FormLabel>Password</FormLabel>
-            <Input type="password" />
-          </FormControl>
-          <Stack spacing={6}>
-            <Stack
-              direction={{ base: 'column', sm: 'row' }}
-              align={'start'}
-              justify={'space-between'}>
-              <Checkbox>Remember me</Checkbox>
-              <Link color={'blue.500'}>Forgot password?</Link>
+        {signInSuccess && (
+          <Text color={signInSuccess.includes('error') ? 'red.500' : 'green.500'}>
+            {signInSuccess}
+          </Text>
+        )}
+        <form onSubmit={doSignIn}>
+          <Stack spacing={4} w={'full'} maxW={'md'}>
+            <Heading fontSize={'2xl'}>Sign in to your account</Heading>
+            <FormControl id="email">
+              <FormLabel>Email address</FormLabel>
+              <Input type="email" name='email' />
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input type="password" name='password' />
+            </FormControl>
+            <Stack spacing={6}>
+              <Stack
+                direction={{ base: 'column', sm: 'row' }}
+                align={'start'}
+                justify={'space-between'}>
+                <Checkbox>Remember me</Checkbox>
+                <Link color={'blue.500'}>Forgot password?</Link>
+              </Stack>
+              <Button type='submit' colorScheme={'blue'} variant={'solid'}>
+                Sign in
+              </Button>
             </Stack>
-            <Button colorScheme={'blue'} variant={'solid'}>
-              Sign in
-            </Button>
           </Stack>
-        </Stack>
+        </form>
       </Flex>
       <Flex flex={1}>
         <Image
