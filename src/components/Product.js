@@ -14,7 +14,7 @@ function Product(props) {
     < React.Fragment >
       <Card maxW='sm' onClick={() => props.whenProductClicked(props.id)}>
         <CardBody>
-          <img src={props.imageUrl} alt="product" />
+          <Image src={props.imageUrl} alt={props.title} objectFit="contain" maxHeight="200px" mx="auto"/>
           <Stack mt='6' spacing='3'>
             <Heading size='md'>{props.title}</Heading>
             <Text>
