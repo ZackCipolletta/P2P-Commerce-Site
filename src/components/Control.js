@@ -29,7 +29,7 @@ function Control(props) {
             description: doc.data().description,
             price: doc.data().price,
             condition: doc.data().condition,
-            image: doc.data().image,
+            imageUrl: doc.data().imageUrl,
             seller: doc.data().seller,
             id: doc.id
           });

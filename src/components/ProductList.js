@@ -11,7 +11,7 @@ function ProductList(props) {
       {props.productList.map((product) =>
         <Product
           whenProductClicked={props.onProductSelection}
-          image={product.image}
+          imageUrl={product.imageUrl}
           title={product.title}
           description={product.description}
           condition={product.condition}

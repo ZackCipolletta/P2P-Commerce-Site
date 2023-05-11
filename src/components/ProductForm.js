@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import { Box } from '@chakra-ui/react';
 import { v4 } from "uuid";
+import { db } from "../firebase";
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
+
 
 function ProductForm(props) {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [imageDownloadURL, setImageDownloadURL] = useState(null);
 
-  const uploadImage = () => {
+  useEffect(() => {
+    if (imageDownloadURL) {
+      handleSubmit();
+    }
+  }, [imageDownloadURL]);
+  
+  const handleImageUpload = (event) => {
+    event.preventDefault();
     if (imageUpload == null) return;
+    setIsUploading(true);
     const imageRef = ref(storage, `productImages/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload)
       .then((snapshot) => {
@@ -21,22 +34,47 @@ function ProductForm(props) {
       })
       .then((downloadURL) => {
         alert("Image Uploaded");
-        // props.onImageUpload(downloadURL); // Passing the downloadURL to the parent component using a callback function
         console.log(downloadURL);
+        setImageDownloadURL(downloadURL);
+        setIsUploading(false);
       })
       .catch((error) => {
         console.error(error);
       });
   };
+  
+  const handleSubmit = () => {
+    if (!imageDownloadURL) {
+      alert("Please upload an image.");
+      return;
+    }
+    setIsUploading(true);
+    const form = document.getElementById('productForm');
+    const formData = new FormData(form);
+    console.log(formData.get("title"));
+    const productData = {
+      title: formData.get("title"),
+      description: formData.get("description"),
+      condition: formData.get("condition"),
+      price: parseFloat(formData.get("price")),
+      shippingPrice: parseFloat(formData.get("shippingPrice")),
+      imageUrl: imageDownloadURL,
+    };
+    addDoc(collection(db, "products"), productData)
+      .then(() => {
+        alert("Product added!");
+        setIsUploading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  
 
   return (
     <React.Fragment>
       <Box className="border p-4" textAlign="left">
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          props.formSubmissionHandler(e);
-          uploadImage(e);
-        }}>
+        <form onSubmit={handleImageUpload} id="productForm" >
 
           <p>Title:
             <input
@@ -66,10 +104,6 @@ function ProductForm(props) {
                 setImageUrl(URL.createObjectURL(e.target.files[0]));
               }}
             />
-            <button
-              className="btn btn-secondary"
-              onClick={uploadImage}>upload
-            </button>
           </p>
           {imageUrl && <img src={imageUrl}
             alt="Preview"
@@ -115,7 +149,7 @@ function ProductForm(props) {
 
 ProductForm.propTypes = {
   formSubmissionHandler: PropTypes.func,
-  buttonText: PropTypes.string
+  buttonText: PropTypes.string,
 };
 
 export default ProductForm;

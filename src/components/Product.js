@@ -1,17 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import 'bootstrap/dist/css/bootstrap.css';
-import { Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text,
-  Divider, ButtonGroup, Button } from '@chakra-ui/react';
+import {
+  Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text,
+  Divider, ButtonGroup, Button
+} from '@chakra-ui/react';
 
 
 function Product(props) {
 
   return (
-    <React.Fragment>
+
+    < React.Fragment >
+      {console.log("image: " + props.imageUrl)}
+      {console.log("title: " + props.title)}
       <Card maxW='sm' onClick={() => props.whenProductClicked(props.id)}>
         <CardBody>
-          {props.image}
+          <img src={props.imageUrl} alt="product" />
           <Stack mt='6' spacing='3'>
             <Heading size='md'>{props.title}</Heading>
             <Text>
@@ -35,7 +40,7 @@ function Product(props) {
           </ButtonGroup>
         </CardFooter>
       </Card>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 
@@ -43,9 +48,9 @@ Product.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   condition: PropTypes.string,
-  price: PropTypes.string,
+  price: PropTypes.number,
   seller: PropTypes.string,
-  image: PropTypes.object
+  imageUrl: PropTypes.string
 };
 
 export default Product;
