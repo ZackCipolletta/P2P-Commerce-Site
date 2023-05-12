@@ -1,6 +1,6 @@
 import React from "react";
 // import PropTypes from "prop-types";
-import NewProductForm from "./NewProductForm";
+import ProductForm from "./ProductForm";
 
 function EditProduct(props) {
 
@@ -9,8 +9,8 @@ function EditProduct(props) {
 
   return (
     <React.Fragment>
-
       <p> This is the edit page</p>
+      <ProductForm />
     </React.Fragment>
   );
 
