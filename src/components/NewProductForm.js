@@ -31,10 +31,7 @@ function NewProductForm(props) {
       imageURL: imageURL,
       // user: props.user
     };
-
-    console.log(props.user);
-    console.log(title)
-    console.log("title and user should be above")
+    
     props.onNewProductCreation(newProduct);
   }
 

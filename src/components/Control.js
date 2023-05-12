@@ -15,6 +15,7 @@ function Control(props) {
   const [mainProductList, setMainProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
+  const [editing, setEditing] = useState(false);
 
   const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo } = props;
 
@@ -79,9 +80,15 @@ function Control(props) {
 
   if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
+      userCredentialInfo={userCredentialInfo}
       product={selectedProduct} />;
     buttonText = "Return to list of products";
   } else if (formVisibleOnPage) {
+    CurrentlyVisibleState = <NewProductForm
+      onNewProductCreation={handleAddingNewProductToList}
+      userCredentialInfo={userCredentialInfo} />;
+    buttonText = "Return to list of products";
+  } else if (editing) {
     CurrentlyVisibleState = <NewProductForm
       onNewProductCreation={handleAddingNewProductToList}
       userCredentialInfo={userCredentialInfo} />;
