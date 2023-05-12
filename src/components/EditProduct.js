@@ -5,12 +5,10 @@ import ProductForm from "./ProductForm";
 function EditProduct(props) {
 
 
-
-
   return (
     <React.Fragment>
       <p> This is the edit page</p>
-      <ProductForm />
+      <ProductForm product={props.productToEdit} />
     </React.Fragment>
   );
 

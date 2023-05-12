@@ -6,17 +6,30 @@ function ProductForm(props) {
   const [imageUrl, setImageUrl] = useState(null);
 
   // here we deconstruct the props passed down from NewProductForm. Names have been kept the same to make them easier to reason about.
-  const { setImageUpload, handleImageUpload } = props;
+  const { setImageUpload, handleImageUpload, product } = props;
+
+  const [title, setTitle] = useState(product?.title || "");
+  const [description, setDescription] = useState(product?.description || "");
+  const [condition, setCondition] = useState(product?.condition || "");
+  const [price, setPrice] = useState(product?.price || "");
+  const [shippingPrice, setShippingPrice] = useState(product?.shippingPrice || "");
+
+  // const [title, setTitle] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [condition, setCondition] = useState("");
+  // const [price, setPrice] = useState("");
+  // const [shippingPrice, setShippingPrice] = useState("");
 
   return (
     <React.Fragment>
       <Box className="border p-4" textAlign="left">
         <form onSubmit={handleImageUpload} id="productForm" >
-
           <p>Title:
             <input
               type="text"
               name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="What are you selling?"
             />
           </p>
@@ -28,6 +41,8 @@ function ProductForm(props) {
             <textarea
               type="textarea"
               name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter your description here"
               style={{ width: "500px", height: "100px", resize: "both" }}
             />
@@ -47,7 +62,9 @@ function ProductForm(props) {
             style={{ width: "100px", height: "100px", objectFit: "cover" }}
           />}
           <p>Condition:
-            <select name="condition">
+            <select name="condition"
+              value={condition}
+              onChange={(e) => setCondition(e.target.value)}>
               <option value="new">New</option>
               <option value="good">Good</option>
               <option value="fair">Fair</option>
@@ -58,6 +75,8 @@ function ProductForm(props) {
             <input
               type="number"
               name="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               placeholder="0"
               step="0.01"
             />
@@ -66,6 +85,8 @@ function ProductForm(props) {
             <input
               type="number"
               name="shippingPrice"
+              value={shippingPrice}
+              onChange={(e) => setShippingPrice(e.target.value)}
               placeholder="0"
             />
           </p>

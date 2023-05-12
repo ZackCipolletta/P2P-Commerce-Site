@@ -33,6 +33,7 @@ function Control(props) {
             condition: doc.data().condition,
             imageUrl: doc.data().imageUrl,
             user: doc.data().user,
+            shippingPrice: doc.data().shippingPrice,
             id: doc.id
           });
         });
@@ -45,12 +46,10 @@ function Control(props) {
     return () => unSubscribe();
   }, []);
 
-  // onResetForm();
 
 
   const handleClick = () => {
     if (selectedProduct != null) {
-      // onResetForm();
       setFormVisibleOnPage(false);
       setSelectedProduct(null);
       setEditing(false);
@@ -86,7 +85,7 @@ function Control(props) {
   if (editing) {
     CurrentlyVisibleState = <EditProduct
       userCredentialInfo={userCredentialInfo}
-      product={selectedProduct} />;
+      productToEdit={selectedProduct} />;
     buttonText = "Return to list of products";
   } else if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
