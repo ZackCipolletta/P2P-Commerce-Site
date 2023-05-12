@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import ProductList from "./ProductList";
-import NewProduct from "./NewProduct";
 import ProductDetail from "./ProductDetail";
 import { db } from "../firebase";
 import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, orderBy } from "firebase/firestore";
 import NewProductForm from "./NewProductForm";
 import { Route, Routes, Outlet } from 'react-router-dom';
-import { Box } from '@chakra-ui/react';
 import EditProduct from "./EditProduct";
 
 function Control(props) {

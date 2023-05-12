@@ -15,13 +15,13 @@ function NewProductForm(props) {
   const [isUploading, setIsUploading] = useState(false);
   const [imageDownloadURL, setImageDownloadURL] = useState(null);
 
-  const user = props.userCredentialInfo
+  const user = props.userCredentialInfo;
   const userEmail = user ? user.email : null;
 
   // we use the useEffect to watch for changes in the imageDownloadURL, once it has changed we know 
   // the downloadURL has been received from the promise returned from Firebase. Once we have the imageDownloadURL, 
   // we call the handleSubmit function where we will use the imageDownloadURL as a property for the product.
-    useEffect(() => {
+  useEffect(() => {
     if (imageDownloadURL) {
       handleSubmit();
     }
@@ -29,18 +29,16 @@ function NewProductForm(props) {
 
   const handleImageUpload = (event) => {
     event.preventDefault();
-    console.log("submit clicked1")
+    console.log("submit clicked1");
     if (imageUpload == null) return;
-    console.log("submit clicked2")
+    console.log("submit clicked2");
     setIsUploading(true);
     const imageRef = ref(storage, `productImages/${imageUpload.name + v4()}`);
     uploadBytes(imageRef, imageUpload)
-      .then((snapshot) => {
-        return snapshot.metadata.fullPath;
-      })
-      .then((path) => {
-        return getDownloadURL(imageRef);
-      })
+      .then((snapshot) =>
+        snapshot.metadata.fullPath)
+      .then(() => getDownloadURL(imageRef)
+      )
       .then((downloadURL) => {
         alert("Image Uploaded");
         console.log(downloadURL);
@@ -53,7 +51,7 @@ function NewProductForm(props) {
   };
 
   const handleSubmit = () => {
-    if (!imageDownloadURL) {
+    if (imageDownloadURL === null) {
       alert("Please upload an image.");
       return;
     }
@@ -66,8 +64,12 @@ function NewProductForm(props) {
       title: formData.get("title"),
       description: formData.get("description"),
       condition: formData.get("condition"),
-      price: parseFloat(formData.get("price")),
-      shippingPrice: parseFloat(formData.get("shippingPrice")),
+      // the inner parseFloat converts the data from the form and converts it to a number
+      // toFixed then returns a string form of the number with 2 decimal places
+      // the outer parseFloat then converts the string with two decimals back into a number
+      // You can use a regex here to validate the input and ensure there, at most, 2 decimal places, but I feel the most important thing at the moment is functionality, so I will tackle that after the edit form, cart and checkout are fully functioning.
+      price: parseFloat(parseFloat(formData.get("price")).toFixed(2)),
+      shippingPrice: parseFloat(parseFloat(formData.get("shippingPrice")).toFixed(2)),
       imageUrl: imageDownloadURL,
       user: userEmail
     };

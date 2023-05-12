@@ -13,7 +13,7 @@ function ProductForm(props) {
   const [condition, setCondition] = useState(product?.condition || "");
   const [price, setPrice] = useState(product?.price || "");
   const [shippingPrice, setShippingPrice] = useState(product?.shippingPrice || "");
-
+  
   return (
     <React.Fragment>
       <Box className="border p-4" textAlign="left">
@@ -100,8 +100,14 @@ function ProductForm(props) {
 }
 
 ProductForm.propTypes = {
+  setImageUpload: PropTypes.func,
   formSubmissionHandler: PropTypes.func,
   buttonText: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  condition: PropTypes.string,
+  price: PropTypes.number,
+  shippingPrice: PropTypes.number,
 };
 
 export default ProductForm;
