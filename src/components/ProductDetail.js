@@ -5,7 +5,7 @@ import { Box, Button } from '@chakra-ui/react';
 function ProductDetail(props) {
 
   const user = props.userCredentialInfo
-  const userEmail = user ? user.email : null;
+  const userEmail = user ? user.email : null; // de
 
   return (
     <React.Fragment>
