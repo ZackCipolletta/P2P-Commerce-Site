@@ -8,6 +8,7 @@ import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, order
 import NewProductForm from "./NewProductForm";
 import { Route, Routes, Outlet } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
+import EditProduct from "./EditProduct";
 
 function Control(props) {
 
@@ -52,11 +53,11 @@ function Control(props) {
       // onResetForm();
       setFormVisibleOnPage(false);
       setSelectedProduct(null);
+      setEditing(false);
     } else {
-
+      setFormVisibleOnPage(false);
+      console.log("handleClick reached");
     }
-    setFormVisibleOnPage(false);
-    console.log("handleClick reached");
   };
 
   const handleChangingSelectedProduct = (id) => {
@@ -72,15 +73,25 @@ function Control(props) {
     setFormVisibleOnPage(false);
   };
 
+  const handleEditClick = () => {
+    setEditing(true);
+    console.log("setting edit to true");
+  };
+
   // onClick={() => props.whenProductClicked(props.id)}>
 
 
   let CurrentlyVisibleState = null;
   let buttonText = null;
-
-  if (selectedProduct != null) {
+  if (editing) {
+    CurrentlyVisibleState = <EditProduct
+      userCredentialInfo={userCredentialInfo}
+      product={selectedProduct} />;
+    buttonText = "Return to list of products";
+  } else if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
       userCredentialInfo={userCredentialInfo}
+      onClickingEdit={handleEditClick}
       product={selectedProduct} />;
     buttonText = "Return to list of products";
   } else if (formVisibleOnPage) {
@@ -88,12 +99,6 @@ function Control(props) {
       onNewProductCreation={handleAddingNewProductToList}
       userCredentialInfo={userCredentialInfo} />;
     buttonText = "Return to list of products";
-  } else if (editing) {
-    CurrentlyVisibleState = <NewProductForm
-      onNewProductCreation={handleAddingNewProductToList}
-      userCredentialInfo={userCredentialInfo} />;
-    buttonText = "Return to list of products";
-
   } else {
     CurrentlyVisibleState = <ProductList
       onProductSelection={handleChangingSelectedProduct}
@@ -108,7 +113,7 @@ function Control(props) {
       <button onClick={() => { handleClick(); }} className="btn btn-primary">{buttonText}</button>
     </React.Fragment>
   );
-}
+};
 
 export default Control;
 

@@ -10,7 +10,7 @@ function EditProduct(props) {
   return (
     <React.Fragment>
 
-      <NewProductForm />
+      <p> This is the edit page</p>
     </React.Fragment>
   );
 
