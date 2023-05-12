@@ -4,19 +4,9 @@ import { Box } from '@chakra-ui/react';
 
 function ProductForm(props) {
   const [imageUrl, setImageUrl] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const { imageDownloadURL, setImageDownloadURL, imageUpload, setImageUpload } = props;
-  const user = props.userCredentialInfo
 
-  const handleImageUpload = props.handleImageUpload;
-  const handleSubmit = props.handleSubmit;
-
-  useEffect(() => {
-    if (imageDownloadURL) {
-      handleSubmit();
-    }
-  }, [imageDownloadURL]);
-  
+  // here we deconstruct the props passed down from NewProductForm. Names have been kept the same to make them easier to reason about.
+  const { setImageUpload, handleImageUpload } = props;
 
   return (
     <React.Fragment>
