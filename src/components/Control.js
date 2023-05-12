@@ -77,6 +77,14 @@ function Control(props) {
     console.log("setting edit to true");
   };
 
+  const handleEditingProduct = async (productToEdit) => {
+    const surveyRef = doc(db, "products", productToEdit.id);
+    console.log("We've hit the handleEditing Product function")
+    await updateDoc(surveyRef, productToEdit);
+    setEditing(false);
+    selectedProduct(null);
+  };
+
   // onClick={() => props.whenProductClicked(props.id)}>
 
 
@@ -85,6 +93,7 @@ function Control(props) {
   if (editing) {
     CurrentlyVisibleState = <EditProduct
       userCredentialInfo={userCredentialInfo}
+      onEditProduct={handleEditingProduct}
       productToEdit={selectedProduct} />;
     buttonText = "Return to list of products";
   } else if (selectedProduct != null) {

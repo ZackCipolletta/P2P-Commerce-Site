@@ -85,7 +85,7 @@ function NewProductForm(props) {
     <React.Fragment>
       <ProductForm
         userCredentialInfo={props.userCredentialInfo}
-        handleImageUpload={handleImageUpload}
+        formSubmissionHandler={handleImageUpload}
         imageUpload={imageUpload}
         setImageUpload={setImageUpload}
         buttonText="Submit" />

@@ -1,7 +1,7 @@
 import React from "react";
 import Product from "./Product";
 import PropTypes from "prop-types";
-import { ChakraProvider, Box, Text, Link, VStack, Code, Grid, theme, SimpleGrid } from '@chakra-ui/react';
+import { SimpleGrid } from '@chakra-ui/react';
 
 function ProductList(props) {
 

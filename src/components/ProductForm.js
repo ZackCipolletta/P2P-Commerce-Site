@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { Box } from '@chakra-ui/react';
 
@@ -6,7 +6,7 @@ function ProductForm(props) {
   const [imageUrl, setImageUrl] = useState(null);
 
   // here we deconstruct the props passed down from NewProductForm. Names have been kept the same to make them easier to reason about.
-  const { setImageUpload, handleImageUpload, product } = props;
+  const { setImageUpload, formSubmissionHandler, product } = props;
 
   const [title, setTitle] = useState(product?.title || "");
   const [description, setDescription] = useState(product?.description || "");
@@ -14,16 +14,10 @@ function ProductForm(props) {
   const [price, setPrice] = useState(product?.price || "");
   const [shippingPrice, setShippingPrice] = useState(product?.shippingPrice || "");
 
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [condition, setCondition] = useState("");
-  // const [price, setPrice] = useState("");
-  // const [shippingPrice, setShippingPrice] = useState("");
-
   return (
     <React.Fragment>
       <Box className="border p-4" textAlign="left">
-        <form onSubmit={handleImageUpload} id="productForm" >
+        <form onSubmit={formSubmissionHandler} id="productForm" >
           <p>Title:
             <input
               type="text"
