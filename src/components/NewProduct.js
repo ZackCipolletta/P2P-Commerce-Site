@@ -5,8 +5,6 @@ import NewProductForm from "./NewProductForm";
 function NewProduct(props) {
 
 
-
-
   return (
     <React.Fragment>
 
