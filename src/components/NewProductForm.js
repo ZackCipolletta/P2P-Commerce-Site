@@ -7,6 +7,29 @@ import { db } from "../firebase";
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
+import { handleImageUpload } from "./ImageUpload";
+
+
+// const handleImageUpload = (event, imageUpload, setImageDownloadURL, setIsUploading) => {
+//   event.preventDefault();
+//   console.log("submit clicked1")
+//   if (imageUpload == null) return;
+//   console.log("submit clicked2")
+//   setIsUploading(true);
+//   const imageRef = ref(storage, `productImages/${imageUpload.name + v4()}`);
+//   uploadBytes(imageRef, imageUpload)
+//     .then((snapshot) => snapshot.metadata.fullPath )
+//     .then(() => getDownloadURL(imageRef))
+//     .then((downloadURL) => {
+//       alert("Image Uploaded");
+//       console.log(downloadURL);
+//       setImageDownloadURL(downloadURL);
+//       setIsUploading(false);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
 
 
 function NewProductForm(props) {
@@ -26,31 +49,6 @@ function NewProductForm(props) {
       handleSubmit();
     }
   }, [imageDownloadURL]);
-
-  const handleImageUpload = (event) => {
-    event.preventDefault();
-    console.log("submit clicked1")
-    if (imageUpload == null) return;
-    console.log("submit clicked2")
-    setIsUploading(true);
-    const imageRef = ref(storage, `productImages/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload)
-      .then((snapshot) => {
-        return snapshot.metadata.fullPath;
-      })
-      .then((path) => {
-        return getDownloadURL(imageRef);
-      })
-      .then((downloadURL) => {
-        alert("Image Uploaded");
-        console.log(downloadURL);
-        setImageDownloadURL(downloadURL);
-        setIsUploading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
 
   const handleSubmit = () => {
     if (!imageDownloadURL) {
@@ -85,7 +83,7 @@ function NewProductForm(props) {
     <React.Fragment>
       <ProductForm
         userCredentialInfo={props.userCredentialInfo}
-        formSubmissionHandler={handleImageUpload}
+        formSubmissionHandler={(event) => handleImageUpload(event, imageUpload, setImageDownloadURL, setIsUploading)}
         imageUpload={imageUpload}
         setImageUpload={setImageUpload}
         buttonText="Submit" />

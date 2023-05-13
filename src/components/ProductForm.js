@@ -6,7 +6,7 @@ function ProductForm(props) {
   const [imageUrl, setImageUrl] = useState(null);
 
   // here we deconstruct the props passed down from NewProductForm. Names have been kept the same to make them easier to reason about.
-  const { setImageUpload, formSubmissionHandler, product } = props;
+  const { setImageUpload, formSubmissionHandler, product, isUploading } = props;
 
   const [title, setTitle] = useState(product?.title || "");
   const [description, setDescription] = useState(product?.description || "");
