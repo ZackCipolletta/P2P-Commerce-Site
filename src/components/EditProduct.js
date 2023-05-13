@@ -11,14 +11,16 @@ function EditProduct(props) {
   // const [isUploading, setIsUploading] = useState(false);
   // const [imageDownloadURL, setImageDownloadURL] = useState(null);
 
-  function handleEditProductFormSubmission(event) {
-    // event.preventDefault();
+  function handleEditProductFormSubmission(imageDownloadURL) {
+    const form = document.getElementById('productForm');
+    const formData = new FormData(form);
     props.onEditProduct({
-      title: event.target.title.value,
-      description: event.target.description.value,
-      condition: event.target.condition.value,
-      price: event.target.price.value,
-      shippingPrice: event.target.shippingPrice.value,
+      title: formData.get("title"),
+      description: formData.get("description"),
+      condition: formData.get("condition"),
+      price: parseFloat(formData.get("price")),
+      shippingPrice: parseFloat(formData.get("shippingPrice")),
+      imageUrl: imageDownloadURL,
       id: productToEdit.id
     });
   }
