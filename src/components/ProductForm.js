@@ -4,6 +4,7 @@ import { Box } from '@chakra-ui/react';
 import { handleImageUpload } from "./ImageUpload";
 
 function ProductForm(props) {
+
   const [imageUrl, setImageUrl] = useState(null);
 
   // here we deconstruct the props passed down from NewProductForm. Names have been kept the same to make them easier to reason about.
@@ -87,6 +88,7 @@ function ProductForm(props) {
               }}
             />
           </p>
+          {/* this will create a preview image of the image the user has chosen to upload to the db. */}
           {imageUrl && <img src={imageUrl}
             alt="Preview"
             style={{ width: "100px", height: "100px", objectFit: "cover" }}

@@ -47,6 +47,8 @@ function NewProductForm(props) {
   return (
     <React.Fragment>
       <ProductForm
+        // we are passing in the user credentials so they can later be used to assign a users email to a product on creation.
+        // this way we can track which user has created a product, so we know who the seller is.
         userCredentialInfo={props.userCredentialInfo}
         formSubmissionHandler={handleSubmit}
         buttonText="Submit" />
