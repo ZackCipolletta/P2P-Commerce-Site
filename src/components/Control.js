@@ -76,11 +76,11 @@ function Control(props) {
   };
 
   const handleEditingProduct = async (productToEdit) => {
-    const surveyRef = doc(db, "products", productToEdit.id);
+    const productRef = doc(db, "products", productToEdit.id);
     console.log("We've hit the handleEditing Product function")
-    await updateDoc(surveyRef, productToEdit);
+    await updateDoc(productRef, productToEdit);
     setEditing(false);
-    selectedProduct(null);
+    setSelectedProduct(null);
   };
 
   // onClick={() => props.whenProductClicked(props.id)}>

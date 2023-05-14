@@ -1,57 +1,22 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box } from '@chakra-ui/react';
 import ProductForm from "./ProductForm";
-import { v4 } from "uuid";
 import { db } from "../firebase";
 import { storage } from "../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
-
+import { handleImageUpload } from "./ImageUpload";
 
 function NewProductForm(props) {
 
-  const [imageUpload, setImageUpload] = useState(null);
+  // const [imageUpload, setImageUpload] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [imageDownloadURL, setImageDownloadURL] = useState(null);
+  // const [imageDownloadURL, setImageDownloadURL] = useState(null);
 
   const user = props.userCredentialInfo;
   const userEmail = user ? user.email : null;
 
-  // we use the useEffect to watch for changes in the imageDownloadURL, once it has changed we know 
-  // the downloadURL has been received from the promise returned from Firebase. Once we have the imageDownloadURL, 
-  // we call the handleSubmit function where we will use the imageDownloadURL as a property for the product.
-  useEffect(() => {
-    if (imageDownloadURL) {
-      handleSubmit();
-    }
-  }, [imageDownloadURL]);
-
-  const handleImageUpload = (event) => {
-    event.preventDefault();
-    console.log("submit clicked1");
-    if (imageUpload == null) return;
-    console.log("submit clicked2");
-    setIsUploading(true);
-    const imageRef = ref(storage, `productImages/${imageUpload.name + v4()}`);
-    uploadBytes(imageRef, imageUpload)
-      .then((snapshot) =>
-        snapshot.metadata.fullPath)
-      .then(() => getDownloadURL(imageRef)
-      )
-      .then((downloadURL) => {
-        alert("Image Uploaded");
-        console.log(downloadURL);
-        setImageDownloadURL(downloadURL);
-        setIsUploading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  const handleSubmit = () => {
-    if (imageDownloadURL === null) {
+  const handleSubmit = (imageDownloadURL) => {
+    if (!imageDownloadURL) {
       alert("Please upload an image.");
       return;
     }
@@ -86,10 +51,10 @@ function NewProductForm(props) {
   return (
     <React.Fragment>
       <ProductForm
+        // we are passing in the user credentials so they can later be used to assign a users email to a product on creation.
+        // this way we can track which user has created a product, so we know who the seller is.
         userCredentialInfo={props.userCredentialInfo}
-        formSubmissionHandler={handleImageUpload}
-        imageUpload={imageUpload}
-        setImageUpload={setImageUpload}
+        formSubmissionHandler={handleSubmit}
         buttonText="Submit" />
     </React.Fragment>
   );

@@ -1,18 +1,24 @@
-import React from "react";
-// import PropTypes from "prop-types";
 import ProductForm from "./ProductForm";
+import { handleImageUpload } from "./ImageUpload";
+import React, { useState, useEffect } from "react";
 
 function EditProduct(props) {
   const { productToEdit } = props;
 
-  function handleEditProductFormSubmission(event) {
-    event.preventDefault();
+  function handleEditProductFormSubmission(imageDownloadURL) {
+
+    // because this function is called by a useEffect we are not able to pass in an event, which we can use to target the form.
+    // instead we target the form element using its id and use the FormData object to extract the values from the form.
+    // this is the same way we extract the form data values when creating a product.
+    const form = document.getElementById('productForm');
+    const formData = new FormData(form);
     props.onEditProduct({
-      title: event.target.title.value,
-      description: event.target.description.value,
-      condition: event.target.condition.value,
-      price: event.target.price.value,
-      shippingPrice: event.target.shippingPrice.value,
+      title: formData.get("title"),
+      description: formData.get("description"),
+      condition: formData.get("condition"),
+      price: parseFloat(formData.get("price")),
+      shippingPrice: parseFloat(formData.get("shippingPrice")),
+      imageUrl: imageDownloadURL,
       id: productToEdit.id
     });
   }
