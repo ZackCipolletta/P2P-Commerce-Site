@@ -35,6 +35,7 @@ function ProductForm(props) {
 
       // if no image is being uploaded to the db, the formSubmissionHandler is called immediately.
     } else {
+      // we do not need to pass in an event object to the formSubmissionHandler since we are targeting the form using it's id and using the FormData object in EditProduct.js
       formSubmissionHandler();
     }
   }
