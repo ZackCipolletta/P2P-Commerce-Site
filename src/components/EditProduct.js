@@ -18,7 +18,7 @@ function EditProduct(props) {
       condition: formData.get("condition"),
       price: parseFloat(formData.get("price")),
       shippingPrice: parseFloat(formData.get("shippingPrice")),
-      imageUrl: imageDownloadURL,
+      imageUrl: imageDownloadURL !== undefined ? imageDownloadURL : productToEdit.imageUrl,
       id: productToEdit.id
     });
   }
