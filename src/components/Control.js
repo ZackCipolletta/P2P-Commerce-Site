@@ -11,12 +11,10 @@ import ShoppingCart from "./ShoppingCart";
 
 function Control(props) {
 
-  // const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [mainProductList, setMainProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
   const [editing, setEditing] = useState(false);
-  // const [cartVisible, setCartVisible] = useState(false);
   const [userCart, setUserCart] = useState([]);
 
   const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo, cartVisible, setCartVisible } = props;
@@ -63,6 +61,9 @@ function Control(props) {
 
   const handleChangingSelectedProduct = (id) => {
     const selection = mainProductList.filter(product => product.id === id)[0];
+    if (cartVisible) {
+      setCartVisible(false)
+    }
     console.log("product id: " + id);
     console.log(selection.title);
     console.log(selection);
@@ -93,9 +94,6 @@ function Control(props) {
     setSelectedProduct(null);
   };
 
-  // onClick={() => props.whenProductClicked(props.id)}>
-
-
   let CurrentlyVisibleState = null;
   let buttonText = null;
   if (editing) {
@@ -107,6 +105,7 @@ function Control(props) {
   } else if (cartVisible) {
     CurrentlyVisibleState = <ShoppingCart
       userCart={userCart}
+      onProductSelection={handleChangingSelectedProduct}
       userCredentialInfo={userCredentialInfo} />;
     buttonText = "Return to list of products";
   } else if (selectedProduct != null) {
@@ -138,16 +137,3 @@ function Control(props) {
 };
 
 export default Control;
-
-
-
-// return (
-//   <React.Fragment>
-//     <Router>
-//       <Routes>
-//         <Route path="/" element={<ProductPage currentlyVisibleState={currentlyVisibleState} onClick={handleClick} />} />
-//         <Route path="/about" element={<About />} />
-//       </Routes>
-//     </Router>
-//   </React.Fragment>
-// );
