@@ -62,7 +62,7 @@ function Control(props) {
   const handleChangingSelectedProduct = (id) => {
     const selection = mainProductList.filter(product => product.id === id)[0];
     if (cartVisible) {
-      setCartVisible(false)
+      setCartVisible(false);
     }
     console.log("product id: " + id);
     console.log(selection.title);
@@ -86,6 +86,10 @@ function Control(props) {
     console.log("the cart is now: " + userCart);
   };
 
+  const removeFromCart = (id) => {
+    setUserCart(userCart.filter((product) => product.id !== id));
+  };
+
   const handleEditingProduct = async (productToEdit) => {
     const productRef = doc(db, "products", productToEdit.id);
     console.log("We've hit the handleEditing Product function");
@@ -105,6 +109,7 @@ function Control(props) {
   } else if (cartVisible) {
     CurrentlyVisibleState = <ShoppingCart
       userCart={userCart}
+      removeFromCart={removeFromCart}
       onProductSelection={handleChangingSelectedProduct}
       userCredentialInfo={userCredentialInfo} />;
     buttonText = "Return to list of products";
