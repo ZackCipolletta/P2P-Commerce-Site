@@ -11,6 +11,7 @@ function App() {
 
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [userCredentialInfo, setUserCredentialInfo] = useState(null);
+  const [cartVisible, setCartVisible] = useState(null);
 
   function handleSignInSuccess(userCredential) {
     setUserCredentialInfo(userCredential);
@@ -21,11 +22,19 @@ function App() {
     console.log(formVisibleOnPage);
   }
 
+  function handleCartClick() {
+    setCartVisible(true);
+    console.log(cartVisible);
+  }
+
   return (
     <ChakraProvider theme={theme}>
       <Router>
         <Box textAlign="center" fontSize="xl">
-          <Header onAddProduct={handleAddProduct} />
+          <Header
+            onAddProduct={handleAddProduct}
+            onCartClick={handleCartClick}
+          />
           <Grid minH="100vh" minW="100vh" columns={{ sm: 1, md: 2, lg: 3 }} spacing={10}>
             <ColorModeSwitcher justifySelf="flex-end" />
             <VStack spacing={8}>
@@ -35,6 +44,8 @@ function App() {
                 <Route path="*" element={<Control
                   formVisibleOnPage={formVisibleOnPage}
                   setFormVisibleOnPage={setFormVisibleOnPage}
+                  setCartVisible={setCartVisible}
+                  cartVisible={cartVisible}
                   userCredentialInfo={userCredentialInfo}
                 />} />
               </Routes>

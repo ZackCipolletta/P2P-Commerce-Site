@@ -8,10 +8,9 @@ import { handleImageUpload } from "./ImageUpload";
 
 function NewProductForm(props) {
 
-  // const [imageUpload, setImageUpload] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  // const [imageDownloadURL, setImageDownloadURL] = useState(null);
 
+  // here we destructure props to be able to make it easier to understand and reason about.
   const user = props.userCredentialInfo;
   const userEmail = user ? user.email : null;
 

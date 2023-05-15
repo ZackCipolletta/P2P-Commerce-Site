@@ -4,7 +4,7 @@ import { Box, Button } from '@chakra-ui/react';
 function ProductDetail(props) {
   // pulling props from the product list.  All of these props are fields
   // stored in firebase and the product list is being pulled from firebase.
-  
+
   // deconstructing props so we do not have to keep typing props{...} over and over again.
   const { product, userCredentialInfo } = props;
 
@@ -30,7 +30,7 @@ function ProductDetail(props) {
               width: "auto",
               height: "auto"
             }} /></p>
-          <p>Seller: {product.user}</p> 
+          <p>Seller: {product.user}</p>
         </div>
 
         <p>Title: {product.title}</p>
@@ -43,6 +43,7 @@ function ProductDetail(props) {
         of editing the product. Otherwise the user only has the option to add it to their cart.*/}
         {product.user !== userEmail ?
           <Button
+            onClick={props.onClickingBuy}
             className="btn btn-primary">
             Add to cart
           </Button> :

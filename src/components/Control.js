@@ -7,6 +7,7 @@ import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, order
 import NewProductForm from "./NewProductForm";
 import { Route, Routes, Outlet } from 'react-router-dom';
 import EditProduct from "./EditProduct";
+import ShoppingCart from "./ShoppingCart";
 
 function Control(props) {
 
@@ -15,8 +16,10 @@ function Control(props) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
   const [editing, setEditing] = useState(false);
+  // const [cartVisible, setCartVisible] = useState(false);
+  const [userCart, setUserCart] = useState([]);
 
-  const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo } = props;
+  const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo, cartVisible, setCartVisible } = props;
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -53,6 +56,7 @@ function Control(props) {
       setEditing(false);
     } else {
       setFormVisibleOnPage(false);
+      setCartVisible(false);
       console.log("handleClick reached");
     }
   };
@@ -75,9 +79,15 @@ function Control(props) {
     console.log("setting edit to true");
   };
 
+  const handleBuyClick = () => {
+    setUserCart([...userCart, selectedProduct]);
+    console.log("item added to cart");
+    console.log("the cart is now: " + userCart);
+  };
+
   const handleEditingProduct = async (productToEdit) => {
     const productRef = doc(db, "products", productToEdit.id);
-    console.log("We've hit the handleEditing Product function")
+    console.log("We've hit the handleEditing Product function");
     await updateDoc(productRef, productToEdit);
     setEditing(false);
     setSelectedProduct(null);
@@ -94,10 +104,16 @@ function Control(props) {
       onEditProduct={handleEditingProduct}
       productToEdit={selectedProduct} />;
     buttonText = "Return to list of products";
+  } else if (cartVisible) {
+    CurrentlyVisibleState = <ShoppingCart
+      userCart={userCart}
+      userCredentialInfo={userCredentialInfo} />;
+    buttonText = "Return to list of products";
   } else if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
       userCredentialInfo={userCredentialInfo}
       onClickingEdit={handleEditClick}
+      onClickingBuy={handleBuyClick}
       product={selectedProduct} />;
     buttonText = "Return to list of products";
   } else if (formVisibleOnPage) {

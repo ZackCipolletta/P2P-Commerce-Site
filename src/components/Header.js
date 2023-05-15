@@ -5,7 +5,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, } from '@chakra-ui/icons';
 
-export default function Header({ onAddProduct }) {
+export default function Header({ onAddProduct, onCartClick }) {
   const { isOpen, onToggle } = useDisclosure();
   const colorModeValue = useColorModeValue('white', 'gray.800');
   const textColorModeValue = useColorModeValue('gray.600', 'white');
@@ -15,6 +15,10 @@ export default function Header({ onAddProduct }) {
 
   const handleAddProductClick = () => {
     onAddProduct();
+  };
+
+  const handleCartClick = () => {
+    onCartClick();
   };
 
   return (
@@ -80,6 +84,14 @@ export default function Header({ onAddProduct }) {
           justify={'flex-end'}
           direction={'row'}
           spacing={6} >
+          <Button
+            variant={'ghost'}
+            onClick={handleCartClick}
+            fontSize={'sm'}
+            fontWeight={400}
+          >
+            Cart
+          </Button>
           <Button
             variant={'ghost'}
             onClick={handleAddProductClick}
@@ -171,4 +183,4 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [{
   label: 'Category1', to: '/',
-}, { label: 'Category2', to: '/', }, { label: 'Category3', to: '/', }, { label: 'Category 4', to: "/", }];
+}, { label: 'Category2', to: '/', }, { label: 'Category3', to: '/', }, { label: 'Category 4', to: "/",  }];
