@@ -11,7 +11,8 @@ function App() {
 
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
   const [userCredentialInfo, setUserCredentialInfo] = useState(null);
-  const [cartVisible, setCartVisible] = useState(null);
+  const [cartVisible, setCartVisible] = useState(false);
+  const [accountPageVisible, setAccountPageVisible] = useState(false);
 
   function handleSignInSuccess(userCredential) {
     setUserCredentialInfo(userCredential);
@@ -19,11 +20,13 @@ function App() {
 
   function handleAddProduct() {
     setFormVisibleOnPage(true);
-    console.log(formVisibleOnPage);
   }
 
   function handleCartClick() {
     setCartVisible(true);
+  }
+  function handleAccountClick() {
+    setAccountPageVisible(true);
     console.log(cartVisible);
   }
 
@@ -34,6 +37,7 @@ function App() {
           <Header
             onAddProduct={handleAddProduct}
             onCartClick={handleCartClick}
+            onAccountClick={handleAccountClick}
           />
           <Grid minH="100vh" minW="100vh" columns={{ sm: 1, md: 2, lg: 3 }} spacing={10}>
             <ColorModeSwitcher justifySelf="flex-end" />
@@ -47,6 +51,8 @@ function App() {
                   setCartVisible={setCartVisible}
                   cartVisible={cartVisible}
                   userCredentialInfo={userCredentialInfo}
+                  accountPageVisible={accountPageVisible}
+                  setAccountPageVisible={setAccountPageVisible}
                 />} />
               </Routes>
             </VStack>

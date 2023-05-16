@@ -9,6 +9,7 @@ import { Route, Routes, Outlet } from 'react-router-dom';
 import EditProduct from "./EditProduct";
 import ShoppingCart from "./ShoppingCart";
 import ConfirmationPage from "./ConfirmationPage";
+import UserAccount from "./UserAccount";
 
 function Control(props) {
 
@@ -19,7 +20,7 @@ function Control(props) {
   const [userCart, setUserCart] = useState([]);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
 
-  const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo, cartVisible, setCartVisible } = props;
+  const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo, cartVisible, setCartVisible, accountPageVisible, setAccountPageVisible } = props;
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -54,11 +55,13 @@ function Control(props) {
       setFormVisibleOnPage(false);
       setSelectedProduct(null);
       setEditing(false);
+      console.log("account page visible:");
+      console.log(accountPageVisible);
     } else {
       setFormVisibleOnPage(false);
       setCartVisible(false);
       setConfirmationVisible(false);
-      console.log("handleClick reached");
+      setAccountPageVisible(false);
     }
   };
 
@@ -70,6 +73,7 @@ function Control(props) {
     console.log("product id: " + id);
     console.log(selection.title);
     console.log(selection);
+    setAccountPageVisible(false);
     setSelectedProduct(selection);
   };
 
@@ -84,7 +88,7 @@ function Control(props) {
   };
 
   const handleBuyClick = () => {
-    setUserCart([...userCart, selectedProduct]);
+    setUserCart((prevUserCar) => [...userCart, selectedProduct]);
     console.log("item added to cart");
     console.log("the cart is now: " + userCart);
   };
@@ -101,6 +105,11 @@ function Control(props) {
     setSelectedProduct(null);
   };
 
+  const handleUserAccountClick = () => {
+    setAccountPageVisible(true);
+    selectedProduct(null);
+  };
+
   let CurrentlyVisibleState = null;
   let buttonText = null;
   if (editing) {
@@ -114,6 +123,15 @@ function Control(props) {
       userCart={userCart}
       removeFromCart={removeFromCart}
       onProductSelection={handleChangingSelectedProduct}
+      userCredentialInfo={userCredentialInfo} />;
+    buttonText = "Return to list of products";
+  } else if (accountPageVisible) {
+    CurrentlyVisibleState = <UserAccount
+      userCart={userCart}
+      removeFromCart={removeFromCart}
+      onProductSelection={handleChangingSelectedProduct}
+      productList={mainProductList}
+      userAccountClicked={handleUserAccountClick}
       userCredentialInfo={userCredentialInfo} />;
     buttonText = "Return to list of products";
   } else if (selectedProduct != null) {
