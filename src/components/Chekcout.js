@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Card, Text } from '@chakra-ui/react';
 import Product from "./Product";
 
-function BuyNow(props) {
+function checkout(props) {
   const { removeFromCart, product } = props;
 
   const handleRemoveId = (id) => {
@@ -31,11 +31,12 @@ function BuyNow(props) {
               <Button variant='solid' colorScheme='blue'>
                 Buy now
               </Button>
-            </ButtonGroup>
+        </ButtonGroup>
+        
       </SimpleGrid>
     </React.Fragment>
   );
 
 }
 
-export default BuyNow;
+export default checkout;
