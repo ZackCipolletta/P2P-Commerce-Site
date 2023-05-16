@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
-  Flex, Box, FormControl, FormLabel, Input, InputGroup, HStack, InputRightElement,
-  Stack, Button, Heading, Text, useColorModeValue, Link, Form,
+  Flex, Box, FormControl, FormLabel, Input, InputGroup, InputRightElement,
+  Stack, Button, Heading, Text, useColorModeValue, Link,
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { auth } from '../firebase';

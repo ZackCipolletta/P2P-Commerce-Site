@@ -137,6 +137,7 @@ function Control(props) {
   } else if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
       userCredentialInfo={userCredentialInfo}
+      productList={mainProductList}
       onClickingEdit={handleEditClick}
       onClickingBuy={handleBuyClick}
       product={selectedProduct} />;
@@ -158,12 +159,17 @@ function Control(props) {
       productList={mainProductList}
       userCredentialInfo={userCredentialInfo}
     />;
+
   }
 
   return (
     <React.Fragment>
+      {CurrentlyVisibleState.type !== ProductList ? (
+        <button onClick={() => handleClick()} className="btn btn-primary">
+          {buttonText}
+        </button>
+      ) : null}
       {CurrentlyVisibleState}
-      <button onClick={() => { handleClick(); }} className="btn btn-primary">{buttonText}</button>
     </React.Fragment>
   );
 };

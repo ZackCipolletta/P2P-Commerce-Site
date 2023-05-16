@@ -1,15 +1,18 @@
 import React from "react";
-import { Box, Button, Text, Flex, Divider, Grid } from '@chakra-ui/react';
+import { Box, Button, Text, Flex, Divider, Grid, SimpleGrid } from '@chakra-ui/react';
+import Product from "./Product";
 
 function ProductDetail(props) {
   // pulling props from the product list.  All of these props are fields
   // stored in firebase and the product list is being pulled from firebase.
 
   // deconstructing props so we do not have to keep typing props{...} over and over again.
-  const { product, userCredentialInfo } = props;
+  const { userCredentialInfo } = props;
 
   // redefining the userCredentials to be easier to read and reason about.
   const userEmail = userCredentialInfo ? userCredentialInfo.email : null;
+
+  const sellerList = props.productList.filter(product => product.user === props.product.user);
 
   return (
     <React.Fragment>
@@ -22,7 +25,7 @@ function ProductDetail(props) {
 
           <Box>
             <img
-              src={product.imageUrl}
+              src={props.product.imageUrl}
               alt="product"
               style={{
                 maxWidth: "400px",
@@ -38,19 +41,19 @@ function ProductDetail(props) {
           </Box>
           <Box mt={4} pt={4}>
             <Text fontWeight="bold" textAlign="left" mb={2}>
-              {product.title}
+              {props.product.title}
             </Text>
             <Text textAlign="left" mb={2}>
-              Description: {product.description}
+              Description: {props.product.description}
             </Text>
             <Text textAlign="left" mb={5} pb={5}>
-              Price: ${product.price}
+              Price: ${props.product.price}
             </Text>
 
             {/* Here we are checking if the user (email) stored as a property of the product in firebase matches the current user's email
         If the email is a match, we know the currently signed in user created the selected product and we give them the option 
         of editing the product. Otherwise the user only has the option to add it to their cart.*/}
-            {product.user !== userEmail ? (
+            {props.product.user !== userEmail ? (
               <Button
                 onClick={props.onClickingBuy}
                 colorScheme="blue"
@@ -73,17 +76,33 @@ function ProductDetail(props) {
           <Box gridColumn="1" gridRow="2">
             <Box id="seller">
               <Divider />
-              <Text>Sold by: {product.user}</Text>
+              <Text>Sold by: {props.product.user}</Text>
             </Box>
           </Box>
           <Box gridColumn="2" gridRow="2">
             <Box id="overView">
               <Divider />
               <Text fontWeight="bold">Overview</Text>
-              <Text>Condition: {product.condition}</Text>
+              <Text>Condition: {props.product.condition}</Text>
             </Box>
           </Box>
         </Grid>
+        <Text fontWeight={"bold"}>More from this seller</Text>
+        <SimpleGrid columns={3} spacing={10}>
+      {sellerList.map((product) =>
+        <Product
+          whenProductClicked={props.onProductSelection}
+          imageUrl={product.imageUrl}
+          title={product.title}
+          description={product.description}
+          condition={product.condition}
+          price={product.price}
+          user={product.user}
+          id={product.id}
+          key={product.id}
+        />
+        )}
+      </SimpleGrid>
       </Box>
     </React.Fragment>
   );

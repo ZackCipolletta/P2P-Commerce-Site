@@ -10,10 +10,6 @@ function ProductList(props) {
 
   return (
     <React.Fragment>
-      {console.log("user is: ")}
-      {console.log(userEmail)}
-      <hr />
-      
       <SimpleGrid columns={3} spacing={10}>
       {props.productList.map((product) =>
         <Product
