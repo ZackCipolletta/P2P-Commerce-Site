@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Card, Text } from '@chakra-ui/react';
-import PayPalCheckout from "./PayPalCheckout";
+// import PayPalCheckout from "./PayPalCheckout";
 
-function checkout(props) {
-  const { removeFromCart, product } = props;
+function Checkout(props) {
+  const { product } = props;
 
-  const handleRemoveId = (id) => {
-    removeFromCart(id);
-  };
 
   return (
     <React.Fragment>
@@ -32,10 +29,10 @@ function checkout(props) {
         </ButtonGroup>
         
       </SimpleGrid>
-      <PayPalCheckout></PayPalCheckout>
+      {/* <PayPalCheckout></PayPalCheckout> */}
     </React.Fragment>
   );
 
 }
 
-export default checkout;
+export default Checkout;

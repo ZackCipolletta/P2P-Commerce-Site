@@ -11,6 +11,7 @@ import ShoppingCart from "./ShoppingCart";
 import ConfirmationPage from "./ConfirmationPage";
 import UserAccount from "./UserAccount";
 import Chekcout from "./Chekcout";
+import PayPalCheckout from "./PayPalCheckout";
 
 function Control(props) {
 

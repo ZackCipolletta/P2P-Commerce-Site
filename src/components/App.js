@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import Header from "./Header";
 import Control from './Control';
+import PayPalCheckout from './PayPalCheckout';
 
 function App() {
 
@@ -44,7 +45,7 @@ function App() {
             <ColorModeSwitcher justifySelf="flex-end" />
             <VStack spacing={8}>
               <Routes>
-                <Route path="/sign-in" element={<SignIn onSignInSuccess={handleSignInSuccess} />} />
+                <Route path="/sign-in" element={<PayPalCheckout />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="*" element={<Control
                   formVisibleOnPage={formVisibleOnPage}

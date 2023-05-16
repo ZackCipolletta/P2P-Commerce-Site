@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { PayPalButton } from 'react-paypal';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 
-const MyComponent = () => {
+const PayPalCheckout = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=<CLIENT_ID>&merchant-id=<MERCHANT_ID>&currency=USD&intent=capture';
@@ -105,28 +105,25 @@ const MyComponent = () => {
               fetch('/your-server/api/order/' + orderId + '/capture/', {
                 method: 'post'
               })
-              .then(function (res) {
-                return res.json();
-              })
-              .then(function (orderData) {
-                // Two cases to handle:
-                //   (1) Non-recoverable errors -> Show a failure message
-                //   (2) Successful transaction -> Show confirmation or thank you
+                .then(function (orderData) {
+                  // Two cases to handle:
+                  //   (1) Non-recoverable errors -> Show a failure message
+                  //   (2) Successful transaction -> Show confirmation or thank you
 
-                // This example reads a v2/checkout/orders capture response, propagated from the server
-                // You could use a different API or structure for your 'orderData'
-                var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
+                  // This example reads a v2/checkout/orders capture response, propagated from the server
+                  // You could use a different API or structure for your 'orderData'
+                  var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
 
-                if (errorDetail) {
-                  var msg = 'Sorry, your transaction could not be processed.';
-                  if (errorDetail.description) msg += '\n\n' + errorDetail.description;
-                  if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
-                  return alert(msg); // Show a failure message
-                }
+                  if (errorDetail) {
+                    var msg = 'Sorry, your transaction could not be processed.';
+                    if (errorDetail.description) msg += '\n\n' + errorDetail.description;
+                    if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
+                    return alert(msg); // Show a failure message
+                  }
 
-                // Show a success message or redirect
-                alert('Transaction completed!');
-              });
+                  // Show a success message or redirect
+                  alert('Transaction completed!');
+                });
             }).catch(function (err) {
               alert('Payment could not be captured! ' + JSON.stringify(err));
             });
@@ -180,6 +177,7 @@ const MyComponent = () => {
           <div>
             <input type="text" id="card-billing-address-country" name="card-billing-address-country" autoComplete="off" placeholder="country code" />
           </div>
+          <br /><br />
           <div>
             <input type="text" id="card-billing-address-country" name="card-billing-address-country" autoComplete="off" placeholder="country code" />
           </div>
@@ -191,4 +189,5 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default PayPalCheckout;
+
