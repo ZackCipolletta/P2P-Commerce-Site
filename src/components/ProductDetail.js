@@ -20,7 +20,7 @@ function ProductDetail(props) {
       to do so which will conditionally send us back to either the user account page, cart page, or the main list
       depending on where we came from.
        <Text mb={-5} pb={-5} >X</Text>  */}
-      <Box border="1px solid gray" p={4} w="850px" h="600px" mx="auto">
+      <Box border="1px solid gray" p={4} w="850px" h="650px" mx="auto">
         <Grid templateColumns="repeat(2, 1fr)" gap={4} h="100%">
 
           <Box>
@@ -46,14 +46,14 @@ function ProductDetail(props) {
             <Box
               textAlign="left"
               mb={2}
-              maxHeight={"150px"}
+              maxHeight={"250px"}
               overflowY={"auto"}
             >
               <Text>
                 Description: {props.product.description}
               </Text>
             </Box>
-            <Text textAlign="left" mb={5} pb={5}>
+            <Text textAlign="left" mb={3} pb={3}>
               Price: ${props.product.price}
             </Text>
 
@@ -94,6 +94,7 @@ function ProductDetail(props) {
             </Box>
           </Box>
         </Grid>
+        </Box>
         <Text fontWeight={"bold"}>More from this seller</Text>
         <SimpleGrid columns={3} spacing={10}>
           {sellerList.map((product) =>
@@ -110,7 +111,6 @@ function ProductDetail(props) {
             />
           )}
         </SimpleGrid>
-      </Box>
     </React.Fragment>
   );
 }

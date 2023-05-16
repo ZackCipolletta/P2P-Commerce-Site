@@ -164,11 +164,13 @@ function Control(props) {
 
   return (
     <React.Fragment>
-      {CurrentlyVisibleState.type !== ProductList ? (
-        <button onClick={() => handleClick()} className="btn btn-primary">
-          {buttonText}
-        </button>
-      ) : null}
+      <div style={{ marginTop: "-10px", paddingTop: "-10px" }}>
+        {CurrentlyVisibleState.type !== ProductList ? (
+          <button onClick={() => handleClick()} className="btn btn-primary" style={{ marginTop: "-10px" }}>
+            {buttonText}
+          </button>
+        ) : null}
+      </div>
       {CurrentlyVisibleState}
     </React.Fragment>
   );
