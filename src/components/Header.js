@@ -5,7 +5,7 @@ import {
 import { NavLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, } from '@chakra-ui/icons';
 
-export default function Header({ onAddProduct, onCartClick, onAccountClick }) {
+export default function Header({ onAddProduct, onCartClick, onAccountClick, userCredentialInfo }) {
   const { isOpen, onToggle } = useDisclosure();
   const colorModeValue = useColorModeValue('white', 'gray.800');
   const textColorModeValue = useColorModeValue('gray.600', 'white');
@@ -92,8 +92,7 @@ export default function Header({ onAddProduct, onCartClick, onAccountClick }) {
             onClick={handleAccountClick}
             fontSize={'sm'}
             fontWeight={400}
-          >
-            Account
+          >{userCredentialInfo ? 'Account' : ''}
           </Button>
           <Button
             variant={'ghost'}
@@ -101,7 +100,7 @@ export default function Header({ onAddProduct, onCartClick, onAccountClick }) {
             fontSize={'sm'}
             fontWeight={400}
           >
-            Cart
+            {userCredentialInfo ? 'Cart' : ''}
           </Button>
           <Button
             variant={'ghost'}
@@ -109,7 +108,7 @@ export default function Header({ onAddProduct, onCartClick, onAccountClick }) {
             fontSize={'sm'}
             fontWeight={400}
           >
-            Add Product
+            {userCredentialInfo ? 'Add Product' : ''}
           </Button>
           <Button
             as={'a'}

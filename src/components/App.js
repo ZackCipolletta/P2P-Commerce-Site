@@ -38,6 +38,7 @@ function App() {
             onAddProduct={handleAddProduct}
             onCartClick={handleCartClick}
             onAccountClick={handleAccountClick}
+            userCredentialInfo={userCredentialInfo}
           />
           <Grid minH="100vh" minW="100vh" columns={{ sm: 1, md: 2, lg: 3 }} spacing={10}>
             <ColorModeSwitcher justifySelf="flex-end" />
