@@ -13,9 +13,7 @@ function BuyNow(props) {
 
   return (
     <React.Fragment>
-      <SimpleGrid columns={3} spacing={10}>
-        <Card key={product.id}>
-
+      <SimpleGrid columns={2} spacing={10}>
           <Box
             h="125px" // Set the height of the image container
             w="125px" // set width of the image
@@ -29,14 +27,11 @@ function BuyNow(props) {
           <Text>Shipping price ${product.shippingPrice}</Text>
           <Text>Total cost: ${product.price + product.shippingPrice}</Text>
           <Divider />
-          <CardFooter>
             <ButtonGroup spacing='2'>
               <Button variant='solid' colorScheme='blue'>
                 Buy now
               </Button>
             </ButtonGroup>
-          </CardFooter>
-        </Card>
       </SimpleGrid>
     </React.Fragment>
   );
