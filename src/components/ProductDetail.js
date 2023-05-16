@@ -20,7 +20,7 @@ function ProductDetail(props) {
       to do so which will conditionally send us back to either the user account page, cart page, or the main list
       depending on where we came from.
        <Text mb={-5} pb={-5} >X</Text>  */}
-      <Box border="1px solid gray" p={4} w="750px" h="600px" mx="auto">
+      <Box border="1px solid gray" p={4} w="850px" h="600px" mx="auto">
         <Grid templateColumns="repeat(2, 1fr)" gap={4} h="100%">
 
           <Box>
@@ -43,9 +43,16 @@ function ProductDetail(props) {
             <Text fontWeight="bold" textAlign="left" mb={2}>
               {props.product.title}
             </Text>
-            <Text textAlign="left" mb={2}>
-              Description: {props.product.description}
-            </Text>
+            <Box
+              textAlign="left"
+              mb={2}
+              maxHeight={"150px"}
+              overflowY={"auto"}
+            >
+              <Text>
+                Description: {props.product.description}
+              </Text>
+            </Box>
             <Text textAlign="left" mb={5} pb={5}>
               Price: ${props.product.price}
             </Text>
@@ -89,20 +96,20 @@ function ProductDetail(props) {
         </Grid>
         <Text fontWeight={"bold"}>More from this seller</Text>
         <SimpleGrid columns={3} spacing={10}>
-      {sellerList.map((product) =>
-        <Product
-          whenProductClicked={props.onProductSelection}
-          imageUrl={product.imageUrl}
-          title={product.title}
-          description={product.description}
-          condition={product.condition}
-          price={product.price}
-          user={product.user}
-          id={product.id}
-          key={product.id}
-        />
-        )}
-      </SimpleGrid>
+          {sellerList.map((product) =>
+            <Product
+              whenProductClicked={props.onProductSelection}
+              imageUrl={product.imageUrl}
+              title={product.title}
+              description={product.description}
+              condition={product.condition}
+              price={product.price}
+              user={product.user}
+              id={product.id}
+              key={product.id}
+            />
+          )}
+        </SimpleGrid>
       </Box>
     </React.Fragment>
   );
