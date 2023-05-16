@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { PayPalButton } from 'react-paypal';
 
-const MyComponent = () => {
+
+const PayPalCheckout = () => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://www.paypal.com/sdk/js?components=buttons,hosted-fields&client-id=<CLIENT_ID>&merchant-id=<MERCHANT_ID>&currency=USD&intent=capture';
@@ -191,4 +193,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default PayPalCheckout;

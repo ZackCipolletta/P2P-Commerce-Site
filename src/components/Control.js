@@ -10,8 +10,7 @@ import EditProduct from "./EditProduct";
 import ShoppingCart from "./ShoppingCart";
 import ConfirmationPage from "./ConfirmationPage";
 import UserAccount from "./UserAccount";
-import buyNow from "./BuyNow";
-import BuyNow from "./BuyNow";
+import Chekcout from "./Chekcout";
 
 function Control(props) {
 
@@ -21,9 +20,9 @@ function Control(props) {
   const [editing, setEditing] = useState(false);
   const [userCart, setUserCart] = useState([]);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
-  const [buyNow, setBuyNow] = useState(false);
+  const [checkout, setCheckout] = useState(false);
 
-  const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo, cartVisible, setCartVisible, accountPageVisible, setAccountPageVisible } = props;
+  const { } = props;
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -55,29 +54,29 @@ function Control(props) {
 
   const handleClick = () => {
     if (selectedProduct != null) {
-      setFormVisibleOnPage(false);
+      props.setFormVisibleOnPage(false);
       setSelectedProduct(null);
       setEditing(false);
-      setBuyNow(false);
+      setCheckout(false);
       console.log("account page visible:");
-      console.log(accountPageVisible);
+      console.log(props.accountPageVisible);
     } else {
-      setFormVisibleOnPage(false);
-      setCartVisible(false);
+      props.setFormVisibleOnPage(false);
+      props.setCartVisible(false);
       setConfirmationVisible(false);
-      setAccountPageVisible(false);
+      props.setAccountPageVisible(false);
     }
   };
 
   const handleChangingSelectedProduct = (id) => {
     const selection = mainProductList.filter(product => product.id === id)[0];
-    if (cartVisible) {
-      setCartVisible(false);
+    if (props.cartVisible) {
+      props.setCartVisible(false);
     }
     console.log("selected product is: ")
     console.log(selection)
 
-    setAccountPageVisible(false);
+    props.setAccountPageVisible(false);
     setSelectedProduct(selection);
 
     console.log("Again, selected product is: ")
@@ -86,7 +85,7 @@ function Control(props) {
 
   const handleAddingNewProductToList = async (newProductData) => {
     await addDoc(collection(db, "products"), newProductData);
-    setFormVisibleOnPage(false);
+    props.setFormVisibleOnPage(false);
   };
 
   const handleEditClick = () => {
@@ -95,7 +94,7 @@ function Control(props) {
   };
 
   const handleBuyClick = () => {
-    setUserCart((prevUserCar) => [...userCart, selectedProduct]);
+    setUserCart((prevUserCart) => [...userCart, selectedProduct]);
     console.log("item added to cart");
     console.log("the cart is now: " + userCart);
   };
@@ -113,72 +112,72 @@ function Control(props) {
   };
 
   const handleUserAccountClick = () => {
-    setAccountPageVisible(true);
+    props.setAccountPageVisible(true);
     selectedProduct(null);
   };
 
   const handleBuyNowClick = () => {
-    setBuyNow(true);
-    setCartVisible(false);
+    setCheckout(true);
+    props.setCartVisible(false);
   };
 
   let CurrentlyVisibleState = null;
   let buttonText = null;
   if (editing) {
     CurrentlyVisibleState = <EditProduct
-      userCredentialInfo={userCredentialInfo}
+      userCredentialInfo={props.userCredentialInfo}
       onEditProduct={handleEditingProduct}
       productToEdit={selectedProduct} />;
     buttonText = "Return to list of products";
-  } else if (cartVisible) {
+  } else if (props.cartVisible) {
     CurrentlyVisibleState = <ShoppingCart
       userCart={userCart}
       removeFromCart={removeFromCart}
       buyNowClick={handleBuyNowClick}
       onProductSelection={handleChangingSelectedProduct}
-      userCredentialInfo={userCredentialInfo} />;
+      userCredentialInfo={props.userCredentialInfo} />;
     buttonText = "Return to list of products";
-  } else if (buyNow) {
-    CurrentlyVisibleState = <BuyNow
+  } else if (checkout) {
+    CurrentlyVisibleState = <Chekcout
       userCart={userCart}
       onProductSelection={handleChangingSelectedProduct}
-      userCredentialInfo={userCredentialInfo}
+      userCredentialInfo={props.userCredentialInfo}
       product={selectedProduct}
     />;
     buttonText = "Return to list of products";
-  } else if (accountPageVisible) {
+  } else if (props.accountPageVisible) {
     CurrentlyVisibleState = <UserAccount
       userCart={userCart}
       removeFromCart={removeFromCart}
       onProductSelection={handleChangingSelectedProduct}
       productList={mainProductList}
       userAccountClicked={handleUserAccountClick}
-      userCredentialInfo={userCredentialInfo} />;
+      userCredentialInfo={props.userCredentialInfo} />;
     buttonText = "Return to list of products";
   } else if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
-      userCredentialInfo={userCredentialInfo}
+      userCredentialInfo={props.userCredentialInfo}
       productList={mainProductList}
       onClickingEdit={handleEditClick}
       onClickingBuy={handleBuyClick}
       product={selectedProduct} />;
     buttonText = "Return to list of products";
-  } else if (formVisibleOnPage) {
+  } else if (props.formVisibleOnPage) {
     CurrentlyVisibleState = <NewProductForm
-      setFormVisibleOnPage={setFormVisibleOnPage}
+      setFormVisibleOnPage={props.setFormVisibleOnPage}
       onNewProductCreation={handleAddingNewProductToList}
       setConfirmationVisible={setConfirmationVisible}
-      userCredentialInfo={userCredentialInfo} />;
+      userCredentialInfo={props.userCredentialInfo} />;
     buttonText = "Return to list of products";
   } else if (confirmationVisible) {
     CurrentlyVisibleState = <ConfirmationPage
-      setFormVisibleOnPage={setFormVisibleOnPage} />;
+      setFormVisibleOnPage={props.setFormVisibleOnPage} />;
     buttonText = "Return to list of products";
   } else {
     CurrentlyVisibleState = <ProductList
       onProductSelection={handleChangingSelectedProduct}
       productList={mainProductList}
-      userCredentialInfo={userCredentialInfo}
+      userCredentialInfo={props.userCredentialInfo}
     />;
 
   }

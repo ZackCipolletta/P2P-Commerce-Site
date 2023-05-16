@@ -193,4 +193,4 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [{
   label: 'Category1', to: '/',
-}, { label: 'Category2', to: '/', }, { label: 'Category3', to: '/', }, { label: 'Category 4', to: "/", }];
+}, { label: 'Category2', to: '/', }, ];
