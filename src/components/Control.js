@@ -8,6 +8,7 @@ import NewProductForm from "./NewProductForm";
 import { Route, Routes, Outlet } from 'react-router-dom';
 import EditProduct from "./EditProduct";
 import ShoppingCart from "./ShoppingCart";
+import ConfirmationPage from "./ConfirmationPage";
 
 function Control(props) {
 
@@ -16,6 +17,7 @@ function Control(props) {
   const [error, setError] = useState(null);
   const [editing, setEditing] = useState(false);
   const [userCart, setUserCart] = useState([]);
+  const [confirmationVisible, setConfirmationVisible] = useState(false);
 
   const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo, cartVisible, setCartVisible } = props;
 
@@ -55,6 +57,7 @@ function Control(props) {
     } else {
       setFormVisibleOnPage(false);
       setCartVisible(false);
+      setConfirmationVisible(false);
       console.log("handleClick reached");
     }
   };
@@ -122,8 +125,14 @@ function Control(props) {
     buttonText = "Return to list of products";
   } else if (formVisibleOnPage) {
     CurrentlyVisibleState = <NewProductForm
+      setFormVisibleOnPage={setFormVisibleOnPage}
       onNewProductCreation={handleAddingNewProductToList}
+      setConfirmationVisible={setConfirmationVisible}
       userCredentialInfo={userCredentialInfo} />;
+    buttonText = "Return to list of products";
+  } else if (confirmationVisible) {
+    CurrentlyVisibleState = <ConfirmationPage
+      setFormVisibleOnPage={setFormVisibleOnPage} />;
     buttonText = "Return to list of products";
   } else {
     CurrentlyVisibleState = <ProductList

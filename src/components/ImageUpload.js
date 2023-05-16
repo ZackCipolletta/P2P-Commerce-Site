@@ -19,7 +19,7 @@ export const handleImageUpload = (event, imageUpload, setImageDownloadURL, setIs
     .then((snapshot) => snapshot.metadata.fullPath)
     .then(() => getDownloadURL(imageRef))
     .then((downloadURL) => {
-      alert("Image Uploaded");
+      alert("Image Uploaded"); // can we put a pop up or something here instead? A loading screen?
       console.log(downloadURL);
       setImageDownloadURL(downloadURL);
       setIsUploading(false);

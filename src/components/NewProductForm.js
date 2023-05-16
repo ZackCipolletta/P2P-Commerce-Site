@@ -22,8 +22,6 @@ function NewProductForm(props) {
     setIsUploading(true);
     const form = document.getElementById('productForm');
     const formData = new FormData(form);
-    console.log(formData.get("title"));
-    console.log(props.userCredentialInfo);
     const productData = {
       title: formData.get("title"),
       description: formData.get("description"),
@@ -39,8 +37,10 @@ function NewProductForm(props) {
     };
     addDoc(collection(db, "products"), productData)
       .then(() => {
-        alert("Product added!");
-        setIsUploading(false);
+        setIsUploading(false); // or below here is where we call our new func to display the confirmation page
+        props.setConfirmationVisible(true);
+        props.setFormVisibleOnPage(false);
+        
       })
       .catch((error) => {
         console.error(error);

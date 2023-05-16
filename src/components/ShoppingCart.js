@@ -5,15 +5,7 @@ import { SimpleGrid, Box, Button } from '@chakra-ui/react';
 import Product from "./Product";
 
 function ShoppingCart(props) {
-  const { userCart, removeFromCart } = props;
-
-  const user = props.userCredentialInfo;
-  const userEmail = user ? user.email : null;
-
-  // const handleRemoveItemClick = () => {
-  //   console.log("Remove this item: ");
-  //   // console.log(id);
-  // };
+  const { removeFromCart } = props;
 
   const handleRemoveId = (id) => {
     removeFromCart(id)
