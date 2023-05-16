@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Card, Text } from '@chakra-ui/react';
-import PayPalCheckout from "./PayPalCheckout";
+// import PayPalCheckout from "./PayPalCheckout";
 
-function checkout(props) {
-  const { removeFromCart, product } = props;
+function Checkout(props) {
+  const { product } = props;
+  const [orderId, setOrderId] = useState(null);
 
-  const handleRemoveId = (id) => {
-    removeFromCart(id);
+  
+  const handleBuyNow = async () => {
+    try {
+      const response = await createOrder(); // Make a request to your server to create a PayPal order
+      const orderID = response.orderID; // Assuming your response contains the orderID from PayPal
+      setOrderId(orderID);
+    } catch (error) {
+      console.error('Error creating order:', error);
+      // Handle error condition
+    }
   };
-
+  
   return (
     <React.Fragment>
       <SimpleGrid columns={2} spacing={10}>
@@ -32,10 +41,11 @@ function checkout(props) {
         </ButtonGroup>
         
       </SimpleGrid>
-      <PayPalCheckout></PayPalCheckout>
+      
+      {/* <PayPalCheckout></PayPalCheckout> */}
     </React.Fragment>
   );
 
 }
 
-export default checkout;
+export default Checkout;
