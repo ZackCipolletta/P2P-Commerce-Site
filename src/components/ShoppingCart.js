@@ -11,6 +11,11 @@ function ShoppingCart(props) {
     removeFromCart(id);
   };
 
+  const buyNowClick = (id) => {
+    props.buyNowClick();
+    props.onProductSelection(id);
+  }
+
   return (
     <React.Fragment>
       <SimpleGrid columns={3} spacing={10}>
@@ -21,8 +26,6 @@ function ShoppingCart(props) {
               whenProductClicked={props.onProductSelection}
               imageUrl={product.imageUrl}
               title={product.title}
-              description={product.description}
-              condition={product.condition}
               price={product.price}
               user={product.user}
               id={product.id}
@@ -31,7 +34,7 @@ function ShoppingCart(props) {
             <Divider />
             <CardFooter>
               <ButtonGroup spacing='2'>
-                <Button variant='solid' colorScheme='blue'>
+                <Button variant='solid' colorScheme='blue' onClick={() => buyNowClick(product.id)}>
                   Buy now
                 </Button>
               </ButtonGroup>

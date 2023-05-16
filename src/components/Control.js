@@ -10,6 +10,8 @@ import EditProduct from "./EditProduct";
 import ShoppingCart from "./ShoppingCart";
 import ConfirmationPage from "./ConfirmationPage";
 import UserAccount from "./UserAccount";
+import buyNow from "./BuyNow";
+import BuyNow from "./BuyNow";
 
 function Control(props) {
 
@@ -19,6 +21,7 @@ function Control(props) {
   const [editing, setEditing] = useState(false);
   const [userCart, setUserCart] = useState([]);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
+  const [buyNow, setBuyNow] = useState(false);
 
   const { formVisibleOnPage, setFormVisibleOnPage, userCredentialInfo, cartVisible, setCartVisible, accountPageVisible, setAccountPageVisible } = props;
 
@@ -55,6 +58,7 @@ function Control(props) {
       setFormVisibleOnPage(false);
       setSelectedProduct(null);
       setEditing(false);
+      setBuyNow(false);
       console.log("account page visible:");
       console.log(accountPageVisible);
     } else {
@@ -70,11 +74,14 @@ function Control(props) {
     if (cartVisible) {
       setCartVisible(false);
     }
-    console.log("product id: " + id);
-    console.log(selection.title);
-    console.log(selection);
+    console.log("selected product is: ")
+    console.log(selection)
+
     setAccountPageVisible(false);
     setSelectedProduct(selection);
+
+    console.log("Again, selected product is: ")
+    console.log(selectedProduct);
   };
 
   const handleAddingNewProductToList = async (newProductData) => {
@@ -110,6 +117,11 @@ function Control(props) {
     selectedProduct(null);
   };
 
+  const handleBuyNowClick = () => {
+    setBuyNow(true);
+    setCartVisible(false);
+  };
+
   let CurrentlyVisibleState = null;
   let buttonText = null;
   if (editing) {
@@ -122,8 +134,17 @@ function Control(props) {
     CurrentlyVisibleState = <ShoppingCart
       userCart={userCart}
       removeFromCart={removeFromCart}
+      buyNowClick={handleBuyNowClick}
       onProductSelection={handleChangingSelectedProduct}
       userCredentialInfo={userCredentialInfo} />;
+    buttonText = "Return to list of products";
+  } else if (buyNow) {
+    CurrentlyVisibleState = <BuyNow
+      userCart={userCart}
+      onProductSelection={handleChangingSelectedProduct}
+      userCredentialInfo={userCredentialInfo}
+      product={selectedProduct}
+    />;
     buttonText = "Return to list of products";
   } else if (accountPageVisible) {
     CurrentlyVisibleState = <UserAccount
