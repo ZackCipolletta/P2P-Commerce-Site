@@ -14,14 +14,18 @@ function Product(props) {
     < React.Fragment >
       <Card maxW='sm' onClick={() => props.whenProductClicked(props.id)}>
         <CardBody>
-        <Box
-          h="200px" // Set the desired height of the image container
-          bgImage={`url(${props.imageUrl})`} // Set the image URL as the background
-          bgSize="cover" // Zoom the image to cover the container
-          bgPosition="center" // Center the image within the container
-        />
+          <Box
+            h="200px" // Set the desired height of the image container
+            bgImage={`url(${props.imageUrl})`} // Set the image URL as the background
+            bgSize="cover" // Zoom the image to cover the container
+            bgPosition="center" // Center the image within the container
+          />
           <Stack mt='2' spacing='3' textAlign="left">
-            <Text >{props.title}</Text>
+            <Text>
+              {props.title.length > 25
+                ? `${props.title.substring(0, 25)}...`
+                : props.title}
+            </Text>
             <Text fontWeight={"bold"} color='blue.600' fontSize='2xl'>
               ${props.price}
             </Text>

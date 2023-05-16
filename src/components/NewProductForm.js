@@ -33,7 +33,12 @@ function NewProductForm(props) {
       price: parseFloat(parseFloat(formData.get("price")).toFixed(2)),
       shippingPrice: parseFloat(parseFloat(formData.get("shippingPrice")).toFixed(2)),
       imageUrl: imageDownloadURL,
-      user: userEmail
+      user: userEmail,
+      active: true,
+      shipped: false,
+      purchaser: null,
+      shippingAddress: null
+
     };
     addDoc(collection(db, "products"), productData)
       .then(() => {
