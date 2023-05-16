@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Card, Text } from '@chakra-ui/react';
 import PayPalCheckout from "./PayPalCheckout";
 
-
 function checkout(props) {
   const { removeFromCart, product } = props;
 
