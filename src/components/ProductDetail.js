@@ -36,8 +36,7 @@ function ProductDetail(props) {
         <p>Title: {product.title}</p>
         <p>Description: {product.description}</p>
         <p>Price: ${product.price}</p>
-        {/* <Button className="btn btn-primary">Add to cart</Button> */}
-
+        
         {/* Here we are checking if the user (email) stored as a property of the product in firebase matches the current user's email
         If the email is a match, we know the currently signed in user created the selected product and we give them the option 
         of editing the product. Otherwise the user only has the option to add it to their cart.*/}

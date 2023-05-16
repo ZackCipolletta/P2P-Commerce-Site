@@ -1,14 +1,10 @@
 import { v4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../firebase";
-import React, { useState, useEffect } from "react";
-
 
 export const handleImageUpload = (event, imageUpload, setImageDownloadURL, setIsUploading ) => {
   event.preventDefault();
-  console.log("submit clicked1");
   if (imageUpload == null) return;
-  console.log("submit clicked2");
 
   // can use the setIsUploading state to display a message while product/image is being uploaded to db
   setIsUploading(true);

@@ -1,11 +1,8 @@
-import ProductForm from "./ProductForm";
-import { handleImageUpload } from "./ImageUpload";
 import React, { useState, useEffect } from "react";
 import { Text, Box, Button } from '@chakra-ui/react';
-import Product from "./Product";
 
 function ConfirmationPage(props) {
-  const { removeFromCart, setFormVisibleOnPage } = props;
+  const { setFormVisibleOnPage } = props;
 
   return (
     <React.Fragment>
