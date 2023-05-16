@@ -1,25 +1,30 @@
 import ProductForm from "./ProductForm";
 import { handleImageUpload } from "./ImageUpload";
 import React, { useState, useEffect } from "react";
-import { SimpleGrid, Box, Button } from '@chakra-ui/react';
+import {
+  SimpleGrid,
+  Box,
+  Button,
+  Divider,
+  Card,
+  CardFooter,
+  ButtonGroup,
+} from "@chakra-ui/react";
 import Product from "./Product";
 
 function ShoppingCart(props) {
-  const { userCart } = props;
+  const { removeFromCart } = props;
 
-  const user = props.userCredentialInfo;
-  const userEmail = user ? user.email : null;
-
-  const handleRemoveItemClick = () => {
-    console.log("Remove this item"); // Replace with your desired functionality
+  const handleRemoveId = (id) => {
+    removeFromCart(id);
   };
 
   return (
     <React.Fragment>
       <SimpleGrid columns={3} spacing={10}>
         {props.userCart.map((product) => (
-          <Box key={product.id}>
-            <Button onClick={handleRemoveItemClick}>X</Button>
+          <Card key={product.id}>
+            <Button onClick={() => handleRemoveId(product.id)}>X</Button>
             <Product
               whenProductClicked={props.onProductSelection}
               imageUrl={product.imageUrl}
@@ -31,7 +36,15 @@ function ShoppingCart(props) {
               id={product.id}
               key={product.id}
             />
-          </Box>
+            <Divider />
+            <CardFooter>
+              <ButtonGroup spacing="2">
+                <Button variant="solid" colorScheme="blue">
+                  Buy now
+                </Button>
+              </ButtonGroup>
+            </CardFooter>
+          </Card>
         ))}
       </SimpleGrid>
     </React.Fragment>
