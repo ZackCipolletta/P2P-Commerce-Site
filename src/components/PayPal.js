@@ -18,7 +18,11 @@ function PayPal(props) {
   const amount = (props.product.price + props.product.shippingPrice).toFixed(2);
   const style = { layout: "vertical" };
 
-  const address = "455 se 6th street";
+  const handleButtonClick = () => {
+
+    console.log("paypal button clicked")
+    console.log(props.shippingAddress)
+  };
 
   return (
     <>
@@ -49,6 +53,8 @@ function PayPal(props) {
                 return orderId;
               });
           }}
+          onClick={handleButtonClick} // Call the handleButtonClick function when the button is clicked
+
           onApprove={function (data, actions) {
             return actions.order.capture().then(function () {
               props.onPaymentReceived(props.product.id, props.userCredentialInfo.email, props.shippingAddress);
