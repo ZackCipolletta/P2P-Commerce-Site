@@ -61,3 +61,48 @@ const Details = () => {
 };
 
 export default Details;
+
+
+#zoid-paypal-buttons-uid_b782883e94_mtc6mta6ndq {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-height: 35px;
+  min-width: 200px;
+  max-width: 750px;
+  font-size: 0;
+}
+
+#zoid-paypal-buttons-uid_b782883e94_mtc6mta6ndq > iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#zoid-paypal-buttons-uid_b782883e94_mtc6mta6ndq > iframe.component-frame {
+  z-index: 100;
+}
+
+#zoid-paypal-buttons-uid_b782883e94_mtc6mta6ndq > iframe.prerender-frame {
+  transition: opacity .2s linear;
+  z-index: 200;
+}
+
+#zoid-paypal-buttons-uid_b782883e94_mtc6mta6ndq > iframe.visible {
+  opacity: 1;
+}
+
+#zoid-paypal-buttons-uid_b782883e94_mtc6mta6ndq > iframe.invisible {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#zoid-paypal-buttons-uid_b782883e94_mtc6mta6ndq > .smart-menu {
+  position: absolute;
+  z-index: 300;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
