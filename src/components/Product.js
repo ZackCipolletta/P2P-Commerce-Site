@@ -1,10 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import 'bootstrap/dist/css/bootstrap.css';
-import {
-  Card, CardHeader, CardBody, CardFooter, Image, Stack, Heading, Text,
-  Divider, ButtonGroup, Button, Box
-} from '@chakra-ui/react';
+import { Card, CardBody, Stack, Text, Box } from '@chakra-ui/react';
 
 
 function Product(props) {

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box } from '@chakra-ui/react';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
-function PayPal({ currency, showSpinner, product }) {
+function PayPal(props) {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
   useEffect(() => {
@@ -10,17 +10,19 @@ function PayPal({ currency, showSpinner, product }) {
       type: "resetOptions",
       value: {
         ...options,
-        currency: currency,
+        currency: props.currency,
       },
     });
-  }, [currency, showSpinner]);
+  }, [props.currency, props.showSpinner]);
 
-  const amount = (product.price + product.shippingPrice).toFixed(2);
+  const amount = (props.product.price + props.product.shippingPrice).toFixed(2);
   const style = { layout: "vertical" };
+
+  const address = "455 se 6th street";
 
   return (
     <>
-      {showSpinner && isPending && <div className="spinner" />}
+      {props.showSpinner && isPending && <div className="spinner" />}
       <Box
         p={4}
         rounded="md" // Apply rounded corners to the box
@@ -28,7 +30,7 @@ function PayPal({ currency, showSpinner, product }) {
         <PayPalButtons
           style={style}
           disabled={false}
-          forceReRender={[amount, currency, style]}
+          forceReRender={[amount, props.currency, style]}
           fundingSource={undefined}
           createOrder={(data, actions) => {
             return actions.order
@@ -36,7 +38,7 @@ function PayPal({ currency, showSpinner, product }) {
                 purchase_units: [
                   {
                     amount: {
-                      currency_code: currency,
+                      currency_code: props.currency,
                       value: amount,
                     },
                   },
@@ -49,7 +51,11 @@ function PayPal({ currency, showSpinner, product }) {
           }}
           onApprove={function (data, actions) {
             return actions.order.capture().then(function () {
-              // Your code here after capturing the order
+              props.onPaymentReceived(props.product.id, props.userCredentialInfo.email, props.shippingAddress);
+              console.log("payment processed successfully weiner weiner");
+              console.log(props.userCredentialInfo.email);
+              console.log(props.product.title);
+              console.log(props.product.title);
             });
           }}
         />

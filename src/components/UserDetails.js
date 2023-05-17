@@ -44,6 +44,12 @@ const UserDetails = () => {
         </GridItem>
         <GridItem colSpan={1}>
           <FormControl>
+            <FormLabel>State</FormLabel>
+            <Input placeholder="California" />
+          </FormControl>
+        </GridItem>
+        <GridItem colSpan={1}>
+          <FormControl>
             <FormLabel>Country</FormLabel>
             <Select>
               <option value="usa">United States of America</option>
@@ -54,9 +60,6 @@ const UserDetails = () => {
         </GridItem>
         <GridItem colSpan={2}>
           <Checkbox defaultChecked>Ship to Billing Address</Checkbox>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <Button variant="primary" size="lg" w="full">Place Order</Button>
         </GridItem>
       </SimpleGrid>
     </VStack>

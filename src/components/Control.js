@@ -3,9 +3,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ProductList from "./ProductList";
 import ProductDetail from "./ProductDetail";
 import { db } from "../firebase";
-import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc, query, orderBy } from "firebase/firestore";
+import { collection, addDoc, doc, updateDoc, onSnapshot, deleteDoc } from "firebase/firestore";
 import NewProductForm from "./NewProductForm";
-import { Route, Routes, Outlet } from 'react-router-dom';
 import EditProduct from "./EditProduct";
 import ShoppingCart from "./ShoppingCart";
 import ConfirmationPage from "./ConfirmationPage";
@@ -73,19 +72,24 @@ function Control(props) {
     if (props.cartVisible) {
       props.setCartVisible(false);
     }
-    console.log("selected product is: ")
-    console.log(selection)
+    console.log("selected product is: ");
+    console.log(selection);
 
     props.setAccountPageVisible(false);
     setSelectedProduct(selection);
 
-    console.log("Again, selected product is: ")
+    console.log("Again, selected product is: ");
     console.log(selectedProduct);
   };
 
-  const handleAddingNewProductToList = async (newProductData) => {
-    await addDoc(collection(db, "products"), newProductData);
+  const handleAddingNewProductToList = async (list, newProductData) => {
+    await addDoc(collection(db, list), newProductData);
     props.setFormVisibleOnPage(false);
+  };
+
+  const handleDeletingProduct = async (id) => {
+    await deleteDoc(doc(db, "products", id));
+    setSelectedProduct(null);
   };
 
   const handleEditClick = () => {
@@ -94,9 +98,43 @@ function Control(props) {
   };
 
   const handleBuyClick = () => {
-    setUserCart((prevUserCart) => [...userCart, selectedProduct]);
-    console.log("item added to cart");
-    console.log("the cart is now: " + userCart);
+    // Check if the selected product is already in the cart
+    const isProductInCart = userCart.some((product) => product.id === selectedProduct.id);
+
+    if (!isProductInCart) {
+      // Add the selected product to the cart
+      setUserCart((prevUserCart) => [...prevUserCart, selectedProduct]);
+      console.log("Item added to cart");
+      console.log("The cart is now: " + userCart);
+    } else {
+      console.log("Product already in cart");
+    }
+  };
+
+  //when a successful payment is made we need to update a few things
+  const handlePaymentReceived = (id, cust, address) => {
+    // first we remove the product from the user's cart and set checkout to false 
+    // so they are no longer on the checkout page.
+    removeFromCart(id);
+    setCheckout(false);
+    const product = mainProductList.find((product) => product.id === id);
+    // Then we create a new variable named 'purchasedProduct' which is equal to the 
+    // product the customer bought, with a few of the properties updated
+    const purchasedProduct = {
+      ...product,
+      active: false,
+      purchaser: cust,
+      shipped: false,
+      shippingAddress: address,
+    };
+
+    //then we add the purchasedProduct to a new list named 'InactiveProducts'
+    handleAddingNewProductToList("InactiveProducts", purchasedProduct)
+    // we delete the product the customer purchased from the main list of products
+    handleDeletingProduct(id);
+    // and we set selectedProduct to null, otherwise the details page would still be displayed.
+    setSelectedProduct(null);
+    console.log("handlePaymentReceived fired")
   };
 
   const removeFromCart = (id) => {
@@ -139,10 +177,9 @@ function Control(props) {
     buttonText = "Return to list of products";
   } else if (checkout) {
     CurrentlyVisibleState = <Chekcout
-      userCart={userCart}
-      onProductSelection={handleChangingSelectedProduct}
       userCredentialInfo={props.userCredentialInfo}
       product={selectedProduct}
+      onPaymentReceived={handlePaymentReceived}
     />;
     buttonText = "Return to list of products";
   } else if (props.accountPageVisible) {

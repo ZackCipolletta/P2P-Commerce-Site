@@ -1,6 +1,5 @@
 import ProductForm from "./ProductForm";
-import { handleImageUpload } from "./ImageUpload";
-import React, { useState, useEffect } from "react";
+import React, {  } from "react";
 
 function EditProduct(props) {
   const { productToEdit } = props;

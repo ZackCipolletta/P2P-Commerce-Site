@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ProductForm from "./ProductForm";
 import { db } from "../firebase";
-import { storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { handleImageUpload } from "./ImageUpload";
 
 function NewProductForm(props) {
 
@@ -40,7 +38,7 @@ function NewProductForm(props) {
       shippingAddress: null
 
     };
-    addDoc(collection(db, "products"), productData)
+    props.onNewProductCreation("products", productData)
       .then(() => {
         setIsUploading(false); // or below here is where we call our new func to display the confirmation page
         props.setConfirmationVisible(true);
