@@ -14,6 +14,7 @@ import Chekcout from "./Chekcout";
 function Control(props) {
 
   const [mainProductList, setMainProductList] = useState([]);
+  const [completedProductListings, setCompletedProductListings] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [error, setError] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -49,6 +50,32 @@ function Control(props) {
     return () => unSubscribe();
   }, []);
 
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      collection(db, "InactiveProducts"),
+      (collectionSnapshot) => {
+        const products = [];
+        collectionSnapshot.forEach((doc) => {
+          products.push({
+            title: doc.data().title,
+            description: doc.data().description,
+            price: doc.data().price,
+            condition: doc.data().condition,
+            imageUrl: doc.data().imageUrl,
+            user: doc.data().user,
+            shippingPrice: doc.data().shippingPrice,
+            id: doc.id
+          });
+        });
+        setCompletedProductListings(products);
+      },
+      (error) => {
+        setError(error.message);
+      }
+    );
+    return () => unSubscribe();
+  }, []);
 
 
   const handleClick = () => {
@@ -188,6 +215,7 @@ function Control(props) {
       removeFromCart={removeFromCart}
       onProductSelection={handleChangingSelectedProduct}
       productList={mainProductList}
+      completedProductListings={completedProductListings}
       userAccountClicked={handleUserAccountClick}
       userCredentialInfo={props.userCredentialInfo} />;
     buttonText = "Return to list of products";
