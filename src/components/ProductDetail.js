@@ -56,6 +56,9 @@ function ProductDetail(props) {
             <Text textAlign="left" mb={3} pb={3}>
               Price: ${props.product.price}
             </Text>
+            <Text textAlign="left" mb={3} pb={3}>
+              +Shipping fee: ${props.product.shippingPrice}
+            </Text>
 
             {/* Here we are checking if the user (email) stored as a property of the product in firebase matches the current user's email
         If the email is a match, we know the currently signed in user created the selected product and we give them the option 

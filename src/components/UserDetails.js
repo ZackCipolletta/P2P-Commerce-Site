@@ -1,6 +1,9 @@
-import { Select, Checkbox, Button, FormControl, FormLabel, Input, VStack, Heading, Text, SimpleGrid, GridItem, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Select, Checkbox, Button, FormControl, FormLabel, Input, VStack, Heading,
+  Text, SimpleGrid, GridItem, useBreakpointValue
+} from "@chakra-ui/react";
 
-const Details = () => {
+const UserDetails = () => {
   const colSpan = useBreakpointValue({ base: 2, md: 1 });
   return (
     <VStack
@@ -60,4 +63,4 @@ const Details = () => {
   );
 };
 
-export default Details;
+export default UserDetails;

@@ -1,102 +1,88 @@
 import React, { useState, useEffect } from "react";
-import { SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Text } from '@chakra-ui/react';
+import {
+  SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Image, Text,
+  AspectRatio, VStack, Stack, Flex, Heading, HStack, Link, useColorMode, useColorModeValue as mode,
+} from '@chakra-ui/react';
 import { PayPalScriptProvider, PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import UserDetails from "./UserDetails";
+import PayPal from "./PayPal";
 
-function ButtonWrapper({ currency, showSpinner, product }) {
-  const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
-  useEffect(() => {
-    dispatch({
-      type: "resetOptions",
-      value: {
-        ...options,
-        currency: currency,
-      },
-    });
-  }, [currency, showSpinner]);
+const Checkout = (props) => {
+  const { toggleColorMode } = useColorMode();
+  const bgColor = mode('gray.50', 'whiteAlpha.50');
+  const secondaryTextColor = mode('gray.600', 'gray.400');
 
-  const amount = (product.price + product.shippingPrice).toFixed(2);
-  const style = { layout: "vertical" };
-
-  return (
-    <>
-      {showSpinner && isPending && <div className="spinner" />}
-      <Box
-        p={4}
-        bg="black" // Set the background color of the box
-        rounded="md" // Apply rounded corners to the box
-      >
-        <PayPalButtons
-          style={style}
-          disabled={false}
-          forceReRender={[amount, currency, style]}
-          fundingSource={undefined}
-          createOrder={(data, actions) => {
-            return actions.order
-              .create({
-                purchase_units: [
-                  {
-                    amount: {
-                      currency_code: currency,
-                      value: amount,
-                    },
-                  },
-                ],
-              })
-              .then((orderId) => {
-                // Your code here after creating the order
-                return orderId;
-              });
-          }}
-          onApprove={function (data, actions) {
-            return actions.order.capture().then(function () {
-              // Your code here after capturing the order
-            });
-          }}
-        />
-      </Box>
-    </>
-  );
-}
-
-function Checkout(props) {
   const { product } = props;
   const currency = "USD";
 
   return (
-    <React.Fragment>
-      <SimpleGrid columns={2} spacing={10}>
-        <Box
-          h="125px" // Set the height of the image container
-          w="125px" // set width of the image
-          bgImage={`url(${product.imageUrl})`} // Set the image URL as the background
-          bgSize="cover" // Zoom the image to cover the container
-          bgPosition="center" // Center the image within the container
-          mx={"30px"}
-        />
-        <Text>{product.title}</Text>
-        <Text>Item price ${product.price}</Text>
-        <Text>Shipping price ${product.shippingPrice}</Text>
-        <Text>Total cost: ${product.price + product.shippingPrice}</Text>
-        <Divider />
-        <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue">
-            Buy now
+    <VStack
+      w="full"
+      h="full"
+      p={10}
+      spacing={6}
+      align="flex-start"
+      bg={bgColor}
+    >
+      <VStack alignItems="flex-start" spacing={3}>
+        <Heading size="2xl">Your cart</Heading>
+        <Text>
+          If the price is too hard on your eyes,{' '}
+          <Button onClick={toggleColorMode} variant="link" colorScheme="black">
+            try changing the theme.
           </Button>
-        </ButtonGroup>
-      </SimpleGrid>
-
+        </Text>
+      </VStack>
+      <HStack spacing={6} alignItems="center" w="full">
+        <AspectRatio ratio={1} w={24}>
+        <Image src={product.imageUrl} />
+        </AspectRatio>
+        <Stack
+          spacing={0}
+          w="full"
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <VStack w="full" spacing={0} alignItems="flex-start">
+            <Heading size="md">{product.title}</Heading>
+            {/* <Text color={secondaryTextColor}>PNYCOMP27541</Text> */}
+          </VStack>
+          <Heading size="sm" textAlign="end">
+            ${product.price}
+          </Heading>
+        </Stack>
+      </HStack>
+      <VStack spacing={4} alignItems="stretch" w="full">
+        <HStack justifyContent="space-between">
+          <Text color={secondaryTextColor}>Subtotal</Text>
+          <Heading size="sm">${product.price}</Heading>
+        </HStack>
+        <HStack justifyContent="space-between">
+          <Text color={secondaryTextColor}>Shipping</Text>
+          <Heading size="sm">${product.shippingPrice}</Heading>
+        </HStack>
+        <HStack justifyContent="space-between">
+        </HStack>
+      </VStack>
+      <Divider />
+      <HStack justifyContent="space-between" w="full">
+        <Text color={secondaryTextColor}>Total</Text>
+        <Heading size="lg">${product.price + product.shippingPrice}</Heading>
+      </HStack>
+      <UserDetails />
       <PayPalScriptProvider
-        options={{
-          "client-id": "AUknOzgS5H3nPwIqTdoT2RDkYxthBoe4eY4DExJs_FDwbZpp-jMCBaaxO1hYqJyTilj8tJV7vnHdZtoH",
-          components: "buttons",
-          currency: "USD",
-        }}
-      >
-         <ButtonWrapper currency={currency} showSpinner={false} product={product} /*{ parentColor={parentColor} }*/  /> 
-      </PayPalScriptProvider>
-    </React.Fragment>
+      options={{
+        "client-id": "AUknOzgS5H3nPwIqTdoT2RDkYxthBoe4eY4DExJs_FDwbZpp-jMCBaaxO1hYqJyTilj8tJV7vnHdZtoH",
+        components: "buttons",
+        currency: "USD",
+      }}
+    >
+      <PayPal currency={currency} showSpinner={false} product={product} /*{ parentColor={parentColor} }*/ />
+    </PayPalScriptProvider>
+    </VStack>
   );
-}
+};
 
 export default Checkout;
