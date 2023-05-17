@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Image, Text,
   AspectRatio, VStack, Stack, Flex, Heading, HStack, Link, useColorMode, useColorModeValue as mode,
 } from '@chakra-ui/react';
-import { PayPalScriptProvider, PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-import UserDetails from "./UserDetails";
-import PayPal from "./PayPal";
-
 
 const PurchaseSummary = (props) => {
   const { toggleColorMode } = useColorMode();
@@ -71,7 +67,6 @@ const PurchaseSummary = (props) => {
         <Text color={secondaryTextColor}>Total</Text>
         <Heading size="lg">${product.price + product.shippingPrice}</Heading>
       </HStack>
-      <UserDetails />
     </VStack>
   );
 };
