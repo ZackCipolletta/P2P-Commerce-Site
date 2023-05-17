@@ -87,29 +87,28 @@ export default function Header({ onAddProduct, onCartClick, onAccountClick, user
           justify={'flex-end'}
           direction={'row'}
           spacing={6} >
-          <Button
+
+          {userCredentialInfo ? (<Button
             variant={'ghost'}
             onClick={handleAccountClick}
             fontSize={'sm'}
             fontWeight={400}
-          >{userCredentialInfo ? 'Account' : ''}
-          </Button>
-          <Button
+          >Account
+          </Button>) : null}
+          {userCredentialInfo ? (<Button
             variant={'ghost'}
             onClick={handleCartClick}
             fontSize={'sm'}
             fontWeight={400}
-          >
-            {userCredentialInfo ? 'Cart' : ''}
-          </Button>
-          <Button
+          >Cart
+          </Button>) : null}
+          {userCredentialInfo ? (<Button
             variant={'ghost'}
             onClick={handleAddProductClick}
             fontSize={'sm'}
             fontWeight={400}
-          >
-            {userCredentialInfo ? 'Add Product' : ''}
-          </Button>
+          >Product
+          </Button>) : null}
           <Button
             as={'a'}
             fontSize={'sm'}
@@ -193,4 +192,4 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [{
   label: 'Category1', to: '/',
-}, { label: 'Category2', to: '/', }, ];
+}, { label: 'Category2', to: '/', },];
