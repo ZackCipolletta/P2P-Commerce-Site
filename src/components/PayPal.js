@@ -23,7 +23,6 @@ function PayPal({ currency, showSpinner, product }) {
       {showSpinner && isPending && <div className="spinner" />}
       <Box
         p={4}
-        bg="black" // Set the background color of the box
         rounded="md" // Apply rounded corners to the box
       >
         <PayPalButtons
