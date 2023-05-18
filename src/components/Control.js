@@ -101,7 +101,7 @@ function Control(props) {
   };
 
   const handleChangingSelectedProduct = (id) => {
-    const productList=[...mainProductList, ...completedProductListings]
+    const productList = [...mainProductList, ...completedProductListings];
     const selection = productList.filter(product => product.id === id)[0];
     if (props.cartVisible) {
       props.setCartVisible(false);
@@ -113,10 +113,10 @@ function Control(props) {
 
   useEffect(() => {
     if (selectedProduct) {
-      console.log(selectedProduct.active);
+      console.log(selectedProduct);
     }
   }, [selectedProduct]);
-  
+
 
   const handleAddingNewProductToList = async (list, newProductData) => {
     await addDoc(collection(db, list), newProductData);
@@ -176,13 +176,20 @@ function Control(props) {
     setUserCart(userCart.filter((product) => product.id !== id));
   };
 
-  const handleEditingProduct = async (productToEdit) => {
-    const productRef = doc(db, "products", productToEdit.id);
-    console.log("We've hit the handleEditing Product function");
+  const handleEditingProduct = async (document, productToEdit) => {
+    const productRef = doc(db, document, productToEdit.id);
     await updateDoc(productRef, productToEdit);
     setEditing(false);
-    setSelectedProduct(null);
+    if (document === "products") {
+      setSelectedProduct(null);
+    }
   };
+
+  const handleMarkAsShipped = async (productToMarkAsShipped) => {
+    const updatedProduct = { ...productToMarkAsShipped, shipped: true };
+    await handleEditingProduct("InactiveProducts", updatedProduct);
+  };
+
 
   const handleUserAccountClick = () => {
     props.setAccountPageVisible(true);
@@ -237,6 +244,7 @@ function Control(props) {
   } else if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
       userCredentialInfo={props.userCredentialInfo}
+      markAsShipped={handleMarkAsShipped}
       productList={mainProductList}
       onProductSelection={handleChangingSelectedProduct}
       onClickingEdit={handleEditClick}
@@ -260,7 +268,6 @@ function Control(props) {
       productList={mainProductList}
       userCredentialInfo={props.userCredentialInfo}
     />;
-
   }
 
   return (

@@ -1,56 +1,94 @@
-import React, { useState } from "react";
-import { Box, VStack, Flex } from "@chakra-ui/react";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import UserDetails from "./UserDetails";
-import PayPal from "./PayPal";
-import PurchaseSummary from "./PurchaseSummary";
+{!props.product.active && props.product.user === userEmail && (
+  <Box position="relative">
+    <Button
+      onClick={handleMarkAsShipped}
+      display={isShipped ? "none" : "block"}
+    >
+      Mark Shipped
+    </Button>
+    {isShipped && (
+      <Text
+        position="absolute"
+        top="0"
+        left="0"
+        width="100%"
+        textAlign="center"
+        fontWeight="bold"
+        color="green"
+      >
+        Shipped
+      </Text>
+    )}
+    <Text fontWeight="bold" mt={4}>
+      Shipping Address:
+    </Text>
+    <Text>{props.product.shippingAddress.firstName}</Text>
+    <Text>{props.product.shippingAddress.lastName}</Text>
+    <Text>{props.product.shippingAddress.address}</Text>
+    <Text>{props.product.shippingAddress.city}</Text>
+    <Text>{props.product.shippingAddress.state}</Text>
+    <Text>{props.product.shippingAddress.country}</Text>
+  </Box>
+);
+}
 
-const Checkout = (props) => {
-  const { product, onPaymentReceived, userCredentialInfo } = props;
-  const currency = "USD";
-  const [shippingAddress, setShippingAddress] = useState(null);
+const [isShipped, setIsShipped] = useState(false);
 
-  const handleShippingAddressChange = (address) => {
-    setShippingAddress(address);
-    console.log(shippingAddress);
-  };
-
-  const handlePayPalButtonClick = () => {
-    console.log(shippingAddress);
-    // Perform any actions with the shipping address information here
-  };
-
-  return (
-    <Flex direction={{ base: "column", lg: "row" }} alignItems="stretch" gap={4}>
-      <Box flex={2}>
-        <UserDetails onShippingAddressChange={handleShippingAddressChange} />
-      </Box>
-      <Box flex={2}>
-        <VStack spacing={2} alignItems="stretch">
-          <PurchaseSummary product={product} />
-
-          <PayPalScriptProvider
-            options={{
-              "client-id": process.env.REACT_APP_CLIENT_ID,
-              components: "buttons",
-              currency: "USD",
-            }}
-          >
-            onClick={handlePayPalButtonClick}
-            <PayPal
-              currency={currency}
-              showSpinner={false}
-              product={product}
-              shippingAddress={shippingAddress}
-              onPaymentReceived={onPaymentReceived}
-              userCredentialInfo={userCredentialInfo}
-               // Handle PayPal button click
-            />
-          </PayPalScriptProvider>
-        </VStack>
-      </Box>
-    </Flex>
-  );
+const handleMarkAsShipped = () => {
+  props.markAsShipped(props.product)
+  setIsShipped(true);
 };
 
-export default Checkout;
+
+{(!props.product.active && props.product.user === userEmail) && (
+  <React.Fragment>
+    {props.product.shipped ? (
+      <Text>Shipped</Text>
+    ) : (
+      <Button onClick={() => props.markAsShipped(props.product)}>Mark shipped</Button>
+    )}
+    <Text fontWeight="bold" mt={4}>
+      Shipping Address:
+    </Text>
+    <Text>{props.product.shippingAddress.firstName}</Text>
+    <Text>{props.product.shippingAddress.lastName}</Text>
+    <Text>{props.product.shippingAddress.address}</Text>
+    <Text>{props.product.shippingAddress.city}</Text>
+    <Text>{props.product.shippingAddress.state}</Text>
+    <Text>{props.product.shippingAddress.country}</Text>
+  </React.Fragment>
+);
+}
+
+{!props.product.active && props.product.user === userEmail && (
+  <Box position="relative">
+    <Button
+      onClick={handleMarkAsShipped}
+      display={isShipped ? "none" : "block"}
+    >
+      Mark Shipped
+    </Button>
+    {isShipped && (
+      <Text
+        position="absolute"
+        top="0"
+        left="0"
+        width="100%"
+        textAlign="center"
+        fontWeight="bold"
+        color="green"
+      >
+        Shipped
+      </Text>
+    )}
+    <Text fontWeight="bold" mt={4}>
+      Shipping Address:
+    </Text>
+    <Text>{props.product.shippingAddress.firstName}</Text>
+    <Text>{props.product.shippingAddress.lastName}</Text>
+    <Text>{props.product.shippingAddress.address}</Text>
+    <Text>{props.product.shippingAddress.city}</Text>
+    <Text>{props.product.shippingAddress.state}</Text>
+    <Text>{props.product.shippingAddress.country}</Text>
+  </Box>
+)}

@@ -1,9 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import { Box, Button, Text, Divider, Grid, SimpleGrid } from '@chakra-ui/react';
 import Product from "./Product";
 import ProductList from "./ProductList";
 
 function ProductDetail(props) {
+  // here we set the initial value of isShipped based on the value of 'shipped' in the database for the selected item.
+  // this way if the item is marked shipped in the database, the value of isShipped will be set to true
+  // which will update our page accordingly.
+  const [isShipped, setIsShipped] = useState(props.product.shipped);
+
+  const handleMarkAsShipped = () => {
+    props.markAsShipped(props.product)
+    setIsShipped(true);
+  };
+
   // pulling props from the product list.  All of these props are fields
   // stored in firebase and the product list is being pulled from firebase.
 
@@ -61,11 +71,36 @@ function ProductDetail(props) {
               +Shipping fee: ${props.product.shippingPrice}
             </Text>
 
-            {/* Here we are checking if the user (email) stored as a property of the product in firebase matches the current user's email
-        If the email is a match, we know the currently signed in user created the selected product and we give them the option 
-        of editing the product. Otherwise the user only has the option to add it to their cart.*/}
-            {(!props.product.active && props.product.user === userEmail) && (
-              <React.Fragment>
+            {/*  here we are checking if the product is active or not and if the user 
+            logged in is the same as the seller.
+            If the current logged in user is the seller we show them the shipping 
+            address and give them the ability to mark the item as shipped.
+            */}
+            {!props.product.active && props.product.user === userEmail && (
+              <Box position="relative">
+                {/* to give users instant feedback once the button is clicked we call a 
+                function which updates state and calls the markAsShipped function to update the database.
+                Once state is updated and isShipped is set to true, the button is effectively hidden,
+                replaced by the text below to show 'Shipped' */}
+                <Button
+                  onClick={handleMarkAsShipped}
+                  display={isShipped ? "none" : "block"}
+                >
+                  Mark Shipped
+                </Button>
+                {isShipped && (
+                  <Text
+                    position="absolute"
+                    top="0"
+                    left="0"
+                    width="100%"
+                    textAlign="center"
+                    fontWeight="bold"
+                    color="green"
+                  >
+                    Shipped
+                  </Text>
+                )}
                 <Text fontWeight="bold" mt={4}>
                   Shipping Address:
                 </Text>
@@ -75,10 +110,14 @@ function ProductDetail(props) {
                 <Text>{props.product.shippingAddress.city}</Text>
                 <Text>{props.product.shippingAddress.state}</Text>
                 <Text>{props.product.shippingAddress.country}</Text>
-              </React.Fragment>
+              </Box>
             )}
 
-
+            {/* Here we are checking if the user (email) stored as a property 
+            of the product in firebase matches the current user's email. 
+            If the email is a match, we know the currently signed in user created 
+        the selected product and we give them the option of editing the product. 
+        Otherwise the user only has the option to add it to their cart.*/}
             {props.product.active && (
               props.product.user === userEmail ? (
                 <Button
@@ -115,14 +154,16 @@ function ProductDetail(props) {
             </Box>
           </Box>
         </Grid>
-      </Box>
-      {props.product.user !== userEmail && (
-        <React.Fragment>
-          <Text fontWeight={"bold"}>More from this seller</Text>
-          <ProductList productList={sellerList} onProductSelection={props.onProductSelection} />
-        </React.Fragment>
-      )}
-    </React.Fragment>
+      </Box >
+      {
+        props.product.user !== userEmail && (
+          <React.Fragment>
+            <Text fontWeight={"bold"}>More from this seller</Text>
+            <ProductList productList={sellerList} onProductSelection={props.onProductSelection} />
+          </React.Fragment>
+        )
+      }
+    </React.Fragment >
   );
 }
 

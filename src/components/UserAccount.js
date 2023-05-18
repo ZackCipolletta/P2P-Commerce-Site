@@ -13,12 +13,29 @@ function UserAccount(props) {
   (product) => product.title.includes(query)
 );
 
-  const purchasedList = props.completedProductListings.filter(product => product.purchaser === props.userCredentialInfo.email);
-  const soldList = props.completedProductListings.filter(product => product.user === props.userCredentialInfo.email);
-  console.log(props.userCredentialInfo);
+  // here we filter the completed listings list for items that have been sold and display them for users
+  // as either items they have purchased or sold.
+  const purchasedList = props.completedProductListings.filter
+    (product => product.purchaser === props.userCredentialInfo.email);
+
+  // here we filter down further to items that a seller needs to ship or not
+  const soldList = props.completedProductListings.filter
+    (product => product.user === props.userCredentialInfo.email
+      && product.shipped === true);
+
+  const toBeShipped = props.completedProductListings.filter
+    (product => 
+      product.user === props.userCredentialInfo.email
+      && product.shipped === false
+  );
+  
 
   return (
     <React.Fragment>
+      <Text>To be shipped: </Text>
+      <ProductList productList={toBeShipped}
+        onProductSelection={props.onProductSelection} />
+      
       <Text>Sold items: </Text>
       <ProductList productList={soldList}
       onProductSelection={props.onProductSelection}/>

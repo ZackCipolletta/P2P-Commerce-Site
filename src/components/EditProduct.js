@@ -11,7 +11,7 @@ function EditProduct(props) {
     // this is the same way we extract the form data values when creating a product.
     const form = document.getElementById('productForm');
     const formData = new FormData(form);
-    props.onEditProduct({
+    props.onEditProduct("products", {
       title: formData.get("title"),
       description: formData.get("description"),
       condition: formData.get("condition"),
