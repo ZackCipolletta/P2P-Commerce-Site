@@ -32,6 +32,7 @@ function Control(props) {
         const products = [];
         collectionSnapshot.forEach((doc) => {
           products.push({
+            active: doc.data().active,
             title: doc.data().title,
             description: doc.data().description,
             price: doc.data().price,
@@ -59,6 +60,7 @@ function Control(props) {
         const products = [];
         collectionSnapshot.forEach((doc) => {
           products.push({
+            active: doc.data().active,
             title: doc.data().title,
             description: doc.data().description,
             price: doc.data().price,
@@ -108,6 +110,13 @@ function Control(props) {
     props.setAccountPageVisible(false);
     setSelectedProduct(selection);
   };
+
+  useEffect(() => {
+    if (selectedProduct) {
+      console.log(selectedProduct.active);
+    }
+  }, [selectedProduct]);
+  
 
   const handleAddingNewProductToList = async (list, newProductData) => {
     await addDoc(collection(db, list), newProductData);

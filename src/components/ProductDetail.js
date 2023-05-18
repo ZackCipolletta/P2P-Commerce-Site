@@ -64,24 +64,41 @@ function ProductDetail(props) {
             {/* Here we are checking if the user (email) stored as a property of the product in firebase matches the current user's email
         If the email is a match, we know the currently signed in user created the selected product and we give them the option 
         of editing the product. Otherwise the user only has the option to add it to their cart.*/}
-            {props.product.user !== userEmail ? (
-              <Button
-                onClick={props.onClickingBuy}
-                colorScheme="blue"
-                variant="solid"
-                mt={4}
-              >
-                Add to cart
-              </Button>
-            ) : (
-              <Button
-                onClick={props.onClickingEdit}
-                colorScheme="green"
-                variant="solid"
-                mt={4}
-              >
-                Edit
-              </Button>
+            {(!props.product.active && props.product.user === userEmail) && (
+              <React.Fragment>
+                <Text fontWeight="bold" mt={4}>
+                  Shipping Address:
+                </Text>
+                <Text>{props.product.shippingAddress.firstName}</Text>
+                <Text>{props.product.shippingAddress.lastName}</Text>
+                <Text>{props.product.shippingAddress.address}</Text>
+                <Text>{props.product.shippingAddress.city}</Text>
+                <Text>{props.product.shippingAddress.state}</Text>
+                <Text>{props.product.shippingAddress.country}</Text>
+              </React.Fragment>
+            )}
+
+
+            {props.product.active && (
+              props.product.user === userEmail ? (
+                <Button
+                  onClick={props.onClickingEdit}
+                  colorScheme="green"
+                  variant="solid"
+                  mt={4}
+                >
+                  Edit
+                </Button>
+              ) : (
+                <Button
+                  onClick={props.onClickingBuy}
+                  colorScheme="blue"
+                  variant="solid"
+                  mt={4}
+                >
+                  Add to cart
+                </Button>
+              )
             )}
           </Box>
           <Box gridColumn="1" gridRow="2">
