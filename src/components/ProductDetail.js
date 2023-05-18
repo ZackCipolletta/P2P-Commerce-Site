@@ -139,14 +139,25 @@ function ProductDetail(props) {
             {props.product.active && (
               <React.Fragment>
                 {props.product.user === userEmail ? (
-                  <Button
-                    onClick={props.onClickingEdit}
-                    colorScheme="green"
-                    variant="solid"
-                    mt={4}
-                  >
-                    Edit
-                  </Button>
+                  <React.Fragment>
+                    <Button
+                      onClick={props.onClickingEdit}
+                      colorScheme="green"
+                      variant="solid"
+                      mt={4}
+                    >
+                      Edit
+                    </Button>
+                    <span> </span>
+                    <Button
+                      onClick={() => props.onDeleteClick(props.product.id)} // Use an arrow function to pass arguments to onDeleteClick
+                      colorScheme="red"
+                      variant="solid"
+                      mt={4}
+                    >
+                      Delete
+                    </Button>
+                  </React.Fragment>
                 ) : (
                   <Button
                     onClick={props.onClickingBuy}
@@ -160,6 +171,7 @@ function ProductDetail(props) {
               </React.Fragment>
             )}
           </Box>
+
 
           <Box>
             <Box id="seller">
@@ -179,14 +191,14 @@ function ProductDetail(props) {
       </Box>
 
       {props.product.user !== userEmail && (
-          <React.Fragment>
-            <Text fontWeight={"bold"}>More from this seller</Text>
+        <React.Fragment>
+          <Text fontWeight={"bold"}>More from this seller</Text>
           <ProductList
             productList={sellerList}
             onProductSelection={props.onProductSelection}
           />
-          </React.Fragment>
-        )}
+        </React.Fragment>
+      )}
     </React.Fragment >
   );
 }

@@ -13,6 +13,8 @@ function App() {
   const [userCredentialInfo, setUserCredentialInfo] = useState(null);
   const [cartVisible, setCartVisible] = useState(false);
   const [accountPageVisible, setAccountPageVisible] = useState(false);
+  const [cartLength, setCartLength] = useState(0);
+
 
   function handleSignInSuccess(userCredential) {
     setUserCredentialInfo(userCredential);
@@ -27,7 +29,6 @@ function App() {
   }
   function handleAccountClick() {
     setAccountPageVisible(true);
-    console.log(cartVisible);
   }
 
   return (
@@ -39,6 +40,7 @@ function App() {
             onCartClick={handleCartClick}
             onAccountClick={handleAccountClick}
             userCredentialInfo={userCredentialInfo}
+            cartLength={cartLength}
           />
           <Grid minH="100vh" minW="100vh" columns={{ sm: 1, md: 2, lg: 3 }} spacing={10}>
             <ColorModeSwitcher justifySelf="flex-end" />
@@ -54,6 +56,7 @@ function App() {
                   userCredentialInfo={userCredentialInfo}
                   accountPageVisible={accountPageVisible}
                   setAccountPageVisible={setAccountPageVisible}
+                  setCartLength={setCartLength}
                 />} />
               </Routes>
             </VStack>

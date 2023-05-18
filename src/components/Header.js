@@ -1,11 +1,11 @@
 import {
   Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link,
-  useColorModeValue, useBreakpointValue, useDisclosure
+  useColorModeValue, useBreakpointValue, useDisclosure, Badge
 } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, } from '@chakra-ui/icons';
 
-export default function Header({ onAddProduct, onCartClick, onAccountClick, userCredentialInfo }) {
+export default function Header({ onAddProduct, onCartClick, onAccountClick, userCredentialInfo, cartLength }) {
   const { isOpen, onToggle } = useDisclosure();
   const colorModeValue = useColorModeValue('white', 'gray.800');
   const textColorModeValue = useColorModeValue('gray.600', 'white');
@@ -100,14 +100,32 @@ export default function Header({ onAddProduct, onCartClick, onAccountClick, user
             onClick={handleCartClick}
             fontSize={'sm'}
             fontWeight={400}
-          >Cart
+          >
+            Cart
+            {cartLength > 0 && (
+              <Box position="relative" display="inline-block" ml={1}>
+                <Badge
+                  colorScheme="red"
+                  borderRadius="full"
+                  px={2}
+                  py={1}
+                  position="absolute"
+                  top="-50%"
+                  right="-50%"
+                  transform="translate(50%,-50%)"
+                  opacity={5}
+                >
+                  {cartLength}
+                </Badge>
+              </Box>
+            )}
           </Button>) : null}
           {userCredentialInfo ? (<Button
             variant={'ghost'}
             onClick={handleAddProductClick}
             fontSize={'sm'}
             fontWeight={400}
-          >List an Item 
+          >List an Item
           </Button>) : null}
           <Button
             as={'a'}

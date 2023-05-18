@@ -28,6 +28,10 @@ function Control(props) {
     window.scrollTo(0, 0); // Scrolls to the top of the page
   }, [selectedProduct, editing, props.cartVisible, props.accountPageVisible]);
 
+  useEffect(() => {
+    const length = userCart.length;
+    props.setCartLength(length);
+  }, [userCart.length]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -110,14 +114,12 @@ function Control(props) {
     if (props.cartVisible) {
       props.setCartVisible(false);
     }
-    console.log(id);
     props.setAccountPageVisible(false);
     setSelectedProduct(selection);
   };
 
   useEffect(() => {
     if (selectedProduct) {
-      console.log(selectedProduct);
     }
   }, [selectedProduct]);
 
@@ -147,7 +149,6 @@ function Control(props) {
       // Add the selected product to the cart
       setUserCart((prevUserCart) => [...prevUserCart, selectedProduct]);
     } else {
-      console.log("Product already in cart");
     }
   };
 
@@ -248,6 +249,7 @@ function Control(props) {
   } else if (selectedProduct != null) {
     CurrentlyVisibleState = <ProductDetail
       userCredentialInfo={props.userCredentialInfo}
+      onDeleteClick={handleDeletingProduct}
       markAsShipped={handleMarkAsShipped}
       productList={mainProductList}
       onProductSelection={handleChangingSelectedProduct}
