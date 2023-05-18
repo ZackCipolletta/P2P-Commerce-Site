@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Button, Text, Divider, Grid, SimpleGrid } from '@chakra-ui/react';
 import Product from "./Product";
+import ProductList from "./ProductList";
 
 function ProductDetail(props) {
   // pulling props from the product list.  All of these props are fields
@@ -97,23 +98,13 @@ function ProductDetail(props) {
             </Box>
           </Box>
         </Grid>
-        </Box>
-        <Text fontWeight={"bold"}>More from this seller</Text>
-        <SimpleGrid columns={3} spacing={10}>
-          {sellerList.map((product) =>
-            <Product
-              whenProductClicked={props.onProductSelection}
-              imageUrl={product.imageUrl}
-              title={product.title}
-              description={product.description}
-              condition={product.condition}
-              price={product.price}
-              user={product.user}
-              id={product.id}
-              key={product.id}
-            />
-          )}
-        </SimpleGrid>
+      </Box>
+      {props.product.user !== userEmail && (
+        <React.Fragment>
+          <Text fontWeight={"bold"}>More from this seller</Text>
+          <ProductList productList={sellerList} onProductSelection={props.onProductSelection} />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 }

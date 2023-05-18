@@ -88,22 +88,23 @@ function Control(props) {
       setSelectedProduct(null);
       setEditing(false);
       setCheckout(false);
-      setConfirmPurchase(false)
+      setConfirmPurchase(false);
     } else {
       props.setFormVisibleOnPage(false);
       props.setCartVisible(false);
       setConfirmationVisible(false);
       props.setAccountPageVisible(false);
-      setConfirmPurchase(false)
+      setConfirmPurchase(false);
     }
   };
 
   const handleChangingSelectedProduct = (id) => {
-    const selection = mainProductList.filter(product => product.id === id)[0];
+    const productList=[...mainProductList, ...completedProductListings]
+    const selection = productList.filter(product => product.id === id)[0];
     if (props.cartVisible) {
       props.setCartVisible(false);
     }
-
+    console.log(id);
     props.setAccountPageVisible(false);
     setSelectedProduct(selection);
   };
@@ -116,7 +117,7 @@ function Control(props) {
   const handleDeletingProduct = async (id) => {
     if (!confirmPurchase) {
       setSelectedProduct(null);
-    } 
+    }
     await deleteDoc(doc(db, "products", id));
     setSelectedProduct(null);
   };
@@ -143,7 +144,7 @@ function Control(props) {
     // so they are no longer on the checkout page.
     removeFromCart(id);
     setCheckout(false);
-    
+
     const product = mainProductList.find((product) => product.id === id);
     // Then we create a new variable named 'purchasedProduct' which is equal to the 
     // product the customer bought, with a few of the properties updated
@@ -157,7 +158,7 @@ function Control(props) {
     setConfirmPurchase(true);
 
     //then we add the purchasedProduct to a new list named 'InactiveProducts'
-    handleAddingNewProductToList("InactiveProducts", purchasedProduct)
+    handleAddingNewProductToList("InactiveProducts", purchasedProduct);
     // we delete the product the customer purchased from the main list of products
     handleDeletingProduct(id);
   };
@@ -228,6 +229,7 @@ function Control(props) {
     CurrentlyVisibleState = <ProductDetail
       userCredentialInfo={props.userCredentialInfo}
       productList={mainProductList}
+      onProductSelection={handleChangingSelectedProduct}
       onClickingEdit={handleEditClick}
       onClickingBuy={handleBuyClick}
       product={selectedProduct} />;
@@ -267,3 +269,5 @@ function Control(props) {
 };
 
 export default Control;
+
+
