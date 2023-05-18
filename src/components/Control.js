@@ -24,6 +24,10 @@ function Control(props) {
   const [checkout, setCheckout] = useState(false);
   const [confirmPurchase, setConfirmPurchase] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to the top of the page
+  }, [selectedProduct, editing, props.cartVisible, props.accountPageVisible]);
+
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
