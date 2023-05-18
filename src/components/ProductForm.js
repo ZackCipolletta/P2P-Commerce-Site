@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import { Box } from '@chakra-ui/react';
+import { Box, Center, Button } from '@chakra-ui/react';
 import { handleImageUpload } from "./ImageUpload";
 
 function ProductForm(props) {
@@ -122,14 +122,16 @@ function ProductForm(props) {
               placeholder="0"
             />
           </p>
-          Total cost calculate: $$$
           <span>
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
-              {props.buttonText}
-            </button>
+            <Center>
+              <Button
+                type="submit"
+                className="btn btn-primary"
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                {props.buttonText}
+              </Button>
+            </Center>
           </span>
         </form>
       </Box>

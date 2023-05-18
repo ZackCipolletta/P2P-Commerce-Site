@@ -107,7 +107,7 @@ export default function Header({ onAddProduct, onCartClick, onAccountClick, user
             onClick={handleAddProductClick}
             fontSize={'sm'}
             fontWeight={400}
-          >Product
+          >List an Item 
           </Button>) : null}
           <Button
             as={'a'}

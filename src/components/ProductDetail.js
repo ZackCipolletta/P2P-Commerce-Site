@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Box, Button, Text, Divider, Grid, SimpleGrid } from '@chakra-ui/react';
 import Product from "./Product";
 import ProductList from "./ProductList";
@@ -6,11 +6,11 @@ import ProductList from "./ProductList";
 function ProductDetail(props) {
   // here we set the initial value of isShipped based on the value of 'shipped' in the database for the selected item.
   // this way if the item is marked shipped in the database, the value of isShipped will be set to true
-  // which will update our page accordingly.
+  // which will update our page ta
   const [isShipped, setIsShipped] = useState(props.product.shipped);
 
   const handleMarkAsShipped = () => {
-    props.markAsShipped(props.product)
+    props.markAsShipped(props.product);
     setIsShipped(true);
   };
 
@@ -31,8 +31,8 @@ function ProductDetail(props) {
       to do so which will conditionally send us back to either the user account page, cart page, or the main list
       depending on where we came from.
        <Text mb={-5} pb={-5} >X</Text>  */}
-      <Box border="1px solid gray" p={4} w="850px" h="650px" mx="auto">
-        <Grid templateColumns="repeat(2, 1fr)" gap={4} h="100%">
+      <Box border="1px solid gray" p={4} w="850px" h="auto" mx="auto">
+        <Grid templateColumns="1fr 1fr" gap={4} h="100%">
 
           <Box>
             <img
@@ -49,7 +49,34 @@ function ProductDetail(props) {
                 height: "auto"
               }}
             />
+            {!props.product.active && props.product.user === userEmail && (
+              <Box mt={4} ml={20}>
+                <Text fontWeight="bold" fontSize="md" textAlign="left">
+                  Shipping Address:
+                </Text>
+                <Text fontSize="md" textAlign="left">
+                  {props.product.shippingAddress.firstName}{" "}
+                  {props.product.shippingAddress.lastName}
+                </Text>
+                <Text fontSize="md" textAlign="left">
+                  {props.product.shippingAddress.address}
+                </Text>
+                <Text fontSize="md" textAlign="left">
+                  {props.product.shippingAddress.city}
+                </Text>
+                <Text fontSize="md" textAlign="left">
+                  {props.product.shippingAddress.state}
+                </Text>
+                <Text fontSize="md" textAlign="left">
+                  {props.product.shippingAddress.country}
+                </Text>
+              </Box>
+            )}
           </Box>
+
+
+
+
           <Box mt={4} pt={4}>
             <Text fontWeight="bold" textAlign="left" mb={2}>
               {props.product.title}
@@ -101,15 +128,6 @@ function ProductDetail(props) {
                     Shipped
                   </Text>
                 )}
-                <Text fontWeight="bold" mt={4}>
-                  Shipping Address:
-                </Text>
-                <Text>{props.product.shippingAddress.firstName}</Text>
-                <Text>{props.product.shippingAddress.lastName}</Text>
-                <Text>{props.product.shippingAddress.address}</Text>
-                <Text>{props.product.shippingAddress.city}</Text>
-                <Text>{props.product.shippingAddress.state}</Text>
-                <Text>{props.product.shippingAddress.country}</Text>
               </Box>
             )}
 
@@ -119,34 +137,38 @@ function ProductDetail(props) {
         the selected product and we give them the option of editing the product. 
         Otherwise the user only has the option to add it to their cart.*/}
             {props.product.active && (
-              props.product.user === userEmail ? (
-                <Button
-                  onClick={props.onClickingEdit}
-                  colorScheme="green"
-                  variant="solid"
-                  mt={4}
-                >
-                  Edit
-                </Button>
-              ) : (
-                <Button
-                  onClick={props.onClickingBuy}
-                  colorScheme="blue"
-                  variant="solid"
-                  mt={4}
-                >
-                  Add to cart
-                </Button>
-              )
+              <React.Fragment>
+                {props.product.user === userEmail ? (
+                  <Button
+                    onClick={props.onClickingEdit}
+                    colorScheme="green"
+                    variant="solid"
+                    mt={4}
+                  >
+                    Edit
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={props.onClickingBuy}
+                    colorScheme="blue"
+                    variant="solid"
+                    mt={4}
+                  >
+                    Add to cart
+                  </Button>
+                )}
+              </React.Fragment>
             )}
           </Box>
-          <Box gridColumn="1" gridRow="2">
+
+          <Box>
             <Box id="seller">
               <Divider />
               <Text>Sold by: {props.product.user}</Text>
             </Box>
           </Box>
-          <Box gridColumn="2" gridRow="2">
+
+          <Box>
             <Box id="overView">
               <Divider />
               <Text fontWeight="bold">Overview</Text>
@@ -154,15 +176,17 @@ function ProductDetail(props) {
             </Box>
           </Box>
         </Grid>
-      </Box >
-      {
-        props.product.user !== userEmail && (
+      </Box>
+
+      {props.product.user !== userEmail && (
           <React.Fragment>
             <Text fontWeight={"bold"}>More from this seller</Text>
-            <ProductList productList={sellerList} onProductSelection={props.onProductSelection} />
+          <ProductList
+            productList={sellerList}
+            onProductSelection={props.onProductSelection}
+          />
           </React.Fragment>
-        )
-      }
+        )}
     </React.Fragment >
   );
 }
