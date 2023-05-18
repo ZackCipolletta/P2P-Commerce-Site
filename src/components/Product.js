@@ -12,7 +12,8 @@ function Product(props) {
       <Card maxW='sm' onClick={() => props.whenProductClicked(props.id)}>
         <CardBody>
           <Box
-            h="200px" // Set the desired height of the image container
+            h="200px"
+            w={"250px"} // Set the desired height of the image container
             bgImage={`url(${props.imageUrl})`} // Set the image URL as the background
             bgSize="cover" // Zoom the image to cover the container
             bgPosition="center" // Center the image within the container

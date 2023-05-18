@@ -1,6 +1,7 @@
 import React from "react";
 import { SimpleGrid, Card, Text } from '@chakra-ui/react';
 import Product from "./Product";
+import ProductList from "./ProductList";
 
 function UserAccount(props) {
 
@@ -32,23 +33,7 @@ function UserAccount(props) {
       </SimpleGrid>
 
       <Text>Purchased items: </Text>
-      <SimpleGrid columns={3} spacing={10}>
-        {soldList.map((product) =>
-          <Card key={product.id} width={"300px"}>
-            <Product
-              whenProductClicked={props.onProductSelection}
-              imageUrl={product.imageUrl}
-              title={product.title}
-              description={product.description}
-              condition={product.condition}
-              price={product.price}
-              user={product.user}
-              id={product.id}
-              key={product.id}
-            />
-          </Card>
-        )}
-      </SimpleGrid>
+      <ProductList productList={soldList} />
 
     </React.Fragment>
   );

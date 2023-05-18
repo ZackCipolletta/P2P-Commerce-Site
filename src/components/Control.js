@@ -65,6 +65,9 @@ function Control(props) {
             imageUrl: doc.data().imageUrl,
             user: doc.data().user,
             shippingPrice: doc.data().shippingPrice,
+            purchaser: doc.data().purchaser,
+            shippingAddress: doc.data().shippingAddress,
+            shipped: doc.data().shipped,
             id: doc.id
           });
         });

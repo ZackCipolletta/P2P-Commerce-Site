@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, VStack, Flex, } from "@chakra-ui/react";
+import { Box, VStack, Flex } from "@chakra-ui/react";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import UserDetails from "./UserDetails";
 import PayPal from "./PayPal";
@@ -12,6 +12,12 @@ const Checkout = (props) => {
 
   const handleShippingAddressChange = (address) => {
     setShippingAddress(address);
+    console.log(shippingAddress);
+  };
+
+  const handlePayPalButtonClick = () => {
+    console.log(shippingAddress);
+    // Perform any actions with the shipping address information here
   };
 
   return (
@@ -30,6 +36,7 @@ const Checkout = (props) => {
               currency: "USD",
             }}
           >
+            onClick={handlePayPalButtonClick}
             <PayPal
               currency={currency}
               showSpinner={false}
@@ -37,6 +44,7 @@ const Checkout = (props) => {
               shippingAddress={shippingAddress}
               onPaymentReceived={onPaymentReceived}
               userCredentialInfo={userCredentialInfo}
+               // Handle PayPal button click
             />
           </PayPalScriptProvider>
         </VStack>
