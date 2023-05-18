@@ -9,7 +9,8 @@ import EditProduct from "./EditProduct";
 import ShoppingCart from "./ShoppingCart";
 import ConfirmationPage from "./ConfirmationPage";
 import UserAccount from "./UserAccount";
-import Chekcout from "./Chekcout";
+import Checkout from "./Checkout";
+import PurchaseConfirmation from "./PurchaseConfirmation";
 
 function Control(props) {
 
@@ -21,8 +22,8 @@ function Control(props) {
   const [userCart, setUserCart] = useState([]);
   const [confirmationVisible, setConfirmationVisible] = useState(false);
   const [checkout, setCheckout] = useState(false);
+  const [confirmPurchase, setConfirmPurchase] = useState(false);
 
-  const { } = props;
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -87,13 +88,13 @@ function Control(props) {
       setSelectedProduct(null);
       setEditing(false);
       setCheckout(false);
-      console.log("account page visible:");
-      console.log(props.accountPageVisible);
+      setConfirmPurchase(false)
     } else {
       props.setFormVisibleOnPage(false);
       props.setCartVisible(false);
       setConfirmationVisible(false);
       props.setAccountPageVisible(false);
+      setConfirmPurchase(false)
     }
   };
 
@@ -102,14 +103,9 @@ function Control(props) {
     if (props.cartVisible) {
       props.setCartVisible(false);
     }
-    console.log("selected product is: ");
-    console.log(selection);
 
     props.setAccountPageVisible(false);
     setSelectedProduct(selection);
-
-    console.log("Again, selected product is: ");
-    console.log(selectedProduct);
   };
 
   const handleAddingNewProductToList = async (list, newProductData) => {
@@ -118,13 +114,15 @@ function Control(props) {
   };
 
   const handleDeletingProduct = async (id) => {
+    if (!confirmPurchase) {
+      setSelectedProduct(null);
+    } 
     await deleteDoc(doc(db, "products", id));
     setSelectedProduct(null);
   };
 
   const handleEditClick = () => {
     setEditing(true);
-    console.log("setting edit to true");
   };
 
   const handleBuyClick = () => {
@@ -134,8 +132,6 @@ function Control(props) {
     if (!isProductInCart) {
       // Add the selected product to the cart
       setUserCart((prevUserCart) => [...prevUserCart, selectedProduct]);
-      console.log("Item added to cart");
-      console.log("The cart is now: " + userCart);
     } else {
       console.log("Product already in cart");
     }
@@ -147,6 +143,7 @@ function Control(props) {
     // so they are no longer on the checkout page.
     removeFromCart(id);
     setCheckout(false);
+    
     const product = mainProductList.find((product) => product.id === id);
     // Then we create a new variable named 'purchasedProduct' which is equal to the 
     // product the customer bought, with a few of the properties updated
@@ -157,14 +154,12 @@ function Control(props) {
       shipped: false,
       shippingAddress: address,
     };
+    setConfirmPurchase(true);
 
     //then we add the purchasedProduct to a new list named 'InactiveProducts'
     handleAddingNewProductToList("InactiveProducts", purchasedProduct)
     // we delete the product the customer purchased from the main list of products
     handleDeletingProduct(id);
-    // and we set selectedProduct to null, otherwise the details page would still be displayed.
-    setSelectedProduct(null);
-    console.log("handlePaymentReceived fired")
   };
 
   const removeFromCart = (id) => {
@@ -206,7 +201,14 @@ function Control(props) {
       userCredentialInfo={props.userCredentialInfo} />;
     buttonText = "Return to list of products";
   } else if (checkout) {
-    CurrentlyVisibleState = <Chekcout
+    CurrentlyVisibleState = <Checkout
+      userCredentialInfo={props.userCredentialInfo}
+      product={selectedProduct}
+      onPaymentReceived={handlePaymentReceived}
+    />;
+    buttonText = "Return to list of products";
+  } else if (confirmPurchase) {
+    CurrentlyVisibleState = <PurchaseConfirmation
       userCredentialInfo={props.userCredentialInfo}
       product={selectedProduct}
       onPaymentReceived={handlePaymentReceived}

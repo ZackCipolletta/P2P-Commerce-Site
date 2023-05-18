@@ -52,10 +52,6 @@ function PayPal(props) {
           onApprove={function (data, actions) {
             return actions.order.capture().then(function () {
               props.onPaymentReceived(props.product.id, props.userCredentialInfo.email, props.shippingAddress);
-              console.log("payment processed successfully weiner weiner");
-              console.log(props.userCredentialInfo.email);
-              console.log(props.product.title);
-              console.log(props.product.title);
             });
           }}
         />
