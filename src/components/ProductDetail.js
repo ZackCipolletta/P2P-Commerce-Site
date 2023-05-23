@@ -95,7 +95,7 @@ function ProductDetail(props) {
               Price: ${props.product.price}
             </Text>
             <Text textAlign="left" mb={3} pb={3}>
-              +Shipping fee: ${props.product.shippingPrice}
+              +Shipping fee: ${(props.product.shippingPrice).toFixed(2)}
             </Text>
 
             {/*  here we are checking if the product is active or not and if the user 

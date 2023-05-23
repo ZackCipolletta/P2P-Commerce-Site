@@ -57,7 +57,7 @@ const PurchaseSummary = (props) => {
         </HStack>
         <HStack justifyContent="space-between">
           <Text color={secondaryTextColor}>Shipping</Text>
-          <Heading size="sm">${product.shippingPrice}</Heading>
+          <Heading size="sm">${(product.shippingPrice).toFixed(2)}</Heading>
         </HStack>
         <HStack justifyContent="space-between">
         </HStack>
@@ -65,7 +65,11 @@ const PurchaseSummary = (props) => {
       <Divider />
       <HStack justifyContent="space-between" w="full">
         <Text color={secondaryTextColor}>Total</Text>
-        <Heading size="lg">${product.price + product.shippingPrice}</Heading>
+        <Heading size="lg">
+        ${(
+          product.price + product.shippingPrice
+        ).toFixed(2)}
+      </Heading>
       </HStack>
     </VStack>
   );
