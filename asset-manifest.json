@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.ababef68.css",
-    "main.js": "/static/js/main.c9120a81.js",
-    "index.html": "/index.html",
-    "main.ababef68.css.map": "/static/css/main.ababef68.css.map",
-    "main.c9120a81.js.map": "/static/js/main.c9120a81.js.map"
+    "main.css": "/P2P-Commerce-Site/static/css/main.ababef68.css",
+    "main.js": "/P2P-Commerce-Site/static/js/main.fee9054b.js",
+    "index.html": "/P2P-Commerce-Site/index.html",
+    "main.ababef68.css.map": "/P2P-Commerce-Site/static/css/main.ababef68.css.map",
+    "main.fee9054b.js.map": "/P2P-Commerce-Site/static/js/main.fee9054b.js.map"
   },
   "entrypoints": [
     "static/css/main.ababef68.css",
-    "static/js/main.c9120a81.js"
+    "static/js/main.fee9054b.js"
   ]
 }
