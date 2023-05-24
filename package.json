@@ -1,6 +1,9 @@
 {
   "name": "p2p-commerce",
   "version": "0.1.0",
+  "repository": {
+    "url": "git+https://github.com/ZackCipolletta/P2P-Commerce-Site.git"
+  },
   "homepage": "https://zackcipolletta.github.io/P2P-Commerce-Site/",
   "private": true,
   "dependencies": {
