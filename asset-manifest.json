@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/P2P-Commerce-Site/static/css/main.ababef68.css",
-    "main.js": "/P2P-Commerce-Site/static/js/main.fee9054b.js",
+    "main.js": "/P2P-Commerce-Site/static/js/main.f9a5c52c.js",
     "index.html": "/P2P-Commerce-Site/index.html",
     "main.ababef68.css.map": "/P2P-Commerce-Site/static/css/main.ababef68.css.map",
-    "main.fee9054b.js.map": "/P2P-Commerce-Site/static/js/main.fee9054b.js.map"
+    "main.f9a5c52c.js.map": "/P2P-Commerce-Site/static/js/main.f9a5c52c.js.map"
   },
   "entrypoints": [
     "static/css/main.ababef68.css",
-    "static/js/main.fee9054b.js"
+    "static/js/main.f9a5c52c.js"
   ]
 }
