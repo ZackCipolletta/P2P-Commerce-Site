@@ -1,6 +1,10 @@
 {
   "name": "p2p-commerce",
   "version": "0.1.0",
+  "repository": {
+    "url": "git+https://github.com/ZackCipolletta/P2P-Commerce-Site.git"
+  },
+  "homepage": "https://zackcipolletta.github.io/P2P-Commerce-Site/",
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
@@ -27,7 +31,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +55,7 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.21.4",
-    "@babel/preset-react": "^7.18.6"
+    "@babel/preset-react": "^7.18.6",
+    "gh-pages": "^5.0.0"
   }
 }
