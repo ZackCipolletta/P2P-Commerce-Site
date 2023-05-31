@@ -1,7 +1,5 @@
-import ProductForm from "./ProductForm";
-import { handleImageUpload } from "./ImageUpload";
-import React, { useState, useEffect } from "react";
-import { SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Card } from '@chakra-ui/react';
+import React, {  } from "react";
+import { SimpleGrid, Button, Divider, CardFooter, ButtonGroup, Card } from '@chakra-ui/react';
 import Product from "./Product";
 
 function ShoppingCart(props) {

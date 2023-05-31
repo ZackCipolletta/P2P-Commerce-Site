@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Text, Divider, Grid, SimpleGrid } from '@chakra-ui/react';
-import Product from "./Product";
+import { Box, Button, Text, Divider, Grid } from '@chakra-ui/react';
 import ProductList from "./ProductList";
 
 function ProductDetail(props) {

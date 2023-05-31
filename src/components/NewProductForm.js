@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ProductForm from "./ProductForm";
-import { db } from "../firebase";
-import { addDoc, collection } from "firebase/firestore";
 
 function NewProductForm(props) {
 

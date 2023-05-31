@@ -1,6 +1,5 @@
 import React from "react";
-import { SimpleGrid, Card, Text } from '@chakra-ui/react';
-import Product from "./Product";
+import { Text } from '@chakra-ui/react';
 import ProductList from "./ProductList";
 
 function UserAccount(props) {

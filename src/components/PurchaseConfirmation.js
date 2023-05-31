@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Text, Box, Button } from '@chakra-ui/react';
-import ProductList from "./ProductList";
+import React, { } from "react";
+import { Text, Box } from '@chakra-ui/react';
 
 function PurchaseConfirmation(props) {
   const { setFormVisibleOnPage } = props;

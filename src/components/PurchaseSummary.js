@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  SimpleGrid, Box, Button, Divider, CardFooter, ButtonGroup, Image, Text,
-  AspectRatio, VStack, Stack, Flex, Heading, HStack, Link, useColorMode, useColorModeValue as mode,
+  Button, Divider, Image, Text,
+  AspectRatio, VStack, Stack, Heading, HStack, useColorMode, useColorModeValue as mode,
 } from '@chakra-ui/react';
 
 const PurchaseSummary = (props) => {
