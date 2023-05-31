@@ -7,7 +7,7 @@ import { HamburgerIcon, CloseIcon, ChevronDownIcon, } from '@chakra-ui/icons';
 
 export default function Header({ onAddProduct, onCartClick, onAccountClick, userCredentialInfo, cartLength }) {
   const { isOpen, onToggle } = useDisclosure();
-  const colorModeValue = useColorModeValue('white', 'gray.800');
+  const colorModeValue = useColorModeValue('off-white', 'gray.800');
   const textColorModeValue = useColorModeValue('gray.600', 'white');
   const borderColorModeValue = useColorModeValue('gray.200', 'gray.900');
   const hoverColorModeValue = useColorModeValue('gray.800', 'white');
